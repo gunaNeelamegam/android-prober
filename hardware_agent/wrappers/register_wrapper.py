@@ -3,7 +3,6 @@ from hardware_agent import App
 # Need's to move into different module
 from functools import wraps, partial
 from typing import Any, Union
-from inspect import signature, isclass
 
 """
 These methods are using for achiving the same functionality as JSONRPC
@@ -14,10 +13,10 @@ NEED's to WORK AROUND
     * reference same as expressjs
 
 """
-def get(func, handler_name: str = ''):
+def get(func = None, handler_name: str = ''):
 
     if func is None:
-        return partial(get, handler_name)
+        return partial(get,handler_name = handler_name)
 
     @wraps(func)
     def get_callback(*args,**kwargs):
@@ -45,12 +44,19 @@ def post(func, handler_name: str = ''):
 
     @wraps(func)
     def post_callback(*args,**kwargs):
+        """
+        Please pass the very first as instance of the class
+        """
         nonlocal handler_name
         if handler_name:
             pass
         else:
             handler_name = func.__name__
-        response = App.app.post(f"/{func.__name__}")(func)
+
+        if len(args):
+            callback = partial(func, args[0])
+        callback.__name__ = handler_name
+        response = App.app.post(f"/{callback.__name__}")(callback)
         return response
 
     return post_callback

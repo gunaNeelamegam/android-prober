@@ -4,7 +4,7 @@ from flask import Flask
 
 # custom module
 from hardware_agent import App
-from hardware_agent.wrappers import get
+from hardware_agent.wrappers import get,post
 from hardware_agent.agents.Bluetooth_Agent import BluetoothAgent
 
 class BluetoothInterface(BluetoothAgent):
@@ -14,17 +14,18 @@ class BluetoothInterface(BluetoothAgent):
             App.app = app
 
     @get
-    def turn_on_bluetooth(self) -> bool:
+    def turn_on_bluetooth(self) -> dict:
         status = self.enable_adapter()
         return {
             "status": status,
         }
 
     @get
-    def turn_off_bluetooth(self) -> bool:
+    def turn_off_bluetooth(self) -> dict:
         status = self.disable_adapter()
-        status = False
-        return status
+        return {
+            "status": status,
+        }
 
 
     def __call__(self, *args: Any, **kwds: Any) -> Any:
@@ -33,7 +34,7 @@ class BluetoothInterface(BluetoothAgent):
                     if not key.startswith('__') and not key.endswith("__"):
                         value()
 
-def register_all():
+def register_bluetooth():
     bluetoothAgent = BluetoothInterface()
     bluetoothAgent()
     return bluetoothAgent

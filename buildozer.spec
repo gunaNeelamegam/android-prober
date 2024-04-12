@@ -1,13 +1,13 @@
 [app]
 
 # (str) Title of your application
-title = sample-app
+title = tester
 
 # (str) Package name
 package.name = hardware_agent
 
 # (str) Package domain (needed for android/ios packaging)
-package.domain = com.zilogic
+package.domain = com.guna
 
 # (str) Source code where the main.py live
 source.dir = .

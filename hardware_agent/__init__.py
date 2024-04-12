@@ -12,5 +12,26 @@ def register_interface(app: Flask):
     if App.app  is None:
         App.app  = app
 
-    from .interfaces.BluetoothInterface import register_all
-    register_all()
+    from .interfaces.BluetoothInterface import register_bluetooth
+    from .interfaces.CallInterface import register_call
+    from .interfaces.TextToSpeechInterface import register_tts
+    from .interfaces.NotificationInterface import register_notify
+    from .interfaces.AudioRecorderInterface import register_audio
+    from .interfaces.GpsInterface import register_gps
+    from .interfaces.BatteryInterface import register_battery
+    from .interfaces.EmailInterface import register_email
+    from .interfaces.BrightnessInterface import register_brightness
+    from .interfaces.CameraInterface import register_camera
+
+    # REGISTERING THE SERVICE's
+
+    register_camera()
+    register_audio()
+    register_bluetooth()
+    register_tts()
+    register_notify()
+    register_call()
+    register_brightness()
+    register_gps()
+    register_battery()
+    register_email()
