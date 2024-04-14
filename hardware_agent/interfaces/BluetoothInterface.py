@@ -4,8 +4,8 @@ from flask import Flask
 
 # custom module
 from hardware_agent import App
-from hardware_agent.wrappers import get,post
-from hardware_agent.agents.Bluetooth_Agent import BluetoothAgent
+from hardware_agent.wrappers import get
+from hardware_agent.agents import BluetoothAgent
 
 class BluetoothInterface(BluetoothAgent):
 
@@ -27,12 +27,11 @@ class BluetoothInterface(BluetoothAgent):
             "status": status,
         }
 
-
     def __call__(self, *args: Any, **kwds: Any) -> Any:
         for key,value in getmembers(self, predicate= ismethod):
-                if key not in dir(BluetoothAgent) :
-                    if not key.startswith('__') and not key.endswith("__"):
-                        value()
+            if key not in dir(BluetoothAgent) :
+                if not key.startswith('__') and not key.endswith("__"):
+                    value()
 
 def register_bluetooth():
     bluetoothAgent = BluetoothInterface()

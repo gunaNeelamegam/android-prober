@@ -2,7 +2,7 @@
 from flask import Flask
 
 class App:
-    app :Flask = None
+    app : Flask = None
 
     @classmethod
     def set_flaskapp(self, app: Flask):
@@ -11,6 +11,8 @@ class App:
 def register_interface(app: Flask):
     if App.app  is None:
         App.app  = app
+
+    # ALL THE INTERFACE WILL RETURN THE INSTANCE OF THE CLASS
 
     from .interfaces.BluetoothInterface import register_bluetooth
     from .interfaces.CallInterface import register_call
@@ -22,6 +24,10 @@ def register_interface(app: Flask):
     from .interfaces.EmailInterface import register_email
     from .interfaces.BrightnessInterface import register_brightness
     from .interfaces.CameraInterface import register_camera
+
+    # ANDROID BACKGROUND SERVICE
+    from .interfaces.AndroidServiceInterface import register_android_service
+    register_android_service()
 
     # REGISTERING THE SERVICE's
 
