@@ -32,7 +32,7 @@ class Platform:
         return platform == "linux"
 
     @classmethod
-    def android(func):
+    def android(cls, func):
         @wraps(func)
         def callback(*args, **kwargs):
             if Platform.is_android():
