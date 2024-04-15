@@ -5,6 +5,7 @@ from kivy.lang import Builder
 from kivy.utils import platform
 from threading import Thread
 
+from hardware_agent.agents import AndroidServiceAgent
 from hardware_agent import register_interface
 
 if platform == 'android':
@@ -20,8 +21,10 @@ BoxLayout:
         height: '30sp'
         Button:
             text: 'start services'
+            on_release: app.start_service()
         Button:
             text: 'stop services'
+            on_release: app.stop_service()
 
     ScrollView:
         Label:
@@ -42,6 +45,8 @@ APP_NAME = "TesterAgent"
 class Tester(App):
 
     def init(self):
+        # this is one way for start and stop the service
+        self.service = AndroidServiceAgent()
         self.flask_thread = None
         self.app = Flask(APP_NAME,
                         static_folder = self.get_ui_path("static"),
@@ -72,6 +77,14 @@ class Tester(App):
 
     def register_route(self):
         self.app.add_url_rule("/", self.index)
+
+    def stop_service(self) -> bool:
+        if platform == "android":
+            self.service.service.stop(mActivity)
+
+    def start_service(self):
+        if platform == 'android':
+            self.service.service.start(mActivity,'')
 
 if __name__ == '__main__':
     Tester().run()

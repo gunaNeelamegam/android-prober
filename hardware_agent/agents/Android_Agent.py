@@ -1,31 +1,50 @@
-from hardware_agent.utils import Platform
+from hardware_agent.utils import Platform # Need's to check after decorator not working
 
-if Platform.is_android():
-    from jnius import autoclass
-    from android import mActivity
-else:
-    autoclass  = lambda *args: args
-
+from jnius import autoclass
+from android import mActivity
 
 class AndroidServiceAgent:
+    """Using this class we can able to start and stop the service programmtically
+    """
 
     def __init__(self) -> None:
+        self.service = None
         self.setup_service()
 
-    @Platform.android
     def setup_service(self) -> bool:
+        """Using this method initiate the service class reference
+
+        Returns:
+            bool: False as Failure True as Successfully
+        """
+        status = False
+        try:
             context =  mActivity.getApplicationContext()
             SERVICE_NAME = str(context.getPackageName()) +\
                 '.Service' + 'Tester'
             self.service = autoclass(SERVICE_NAME)
-            return True
+            status = True
+        except Exception as e:
+            print("EXCEPTION", e.args);
+        finally:
+            return status
 
-    @Platform.android
     def stop_service(self) -> bool:
-        self.service.stop(mActivity)
-        return True
+        status = False
+        try:
+            self.service.stop(mActivity)
+            status = True
+        except Exception as e:
+            print("EXECEPTION : ", e.args)
+        finally:
+            return status
 
-    @Platform.android
     def start_service(self) -> bool:
-        self.service.start(mActivity,'')
-        return True
+        status = False
+        try:
+            self.service.start(mActivity,'')
+            status = True
+        except Exception as e:
+            print("EXECPTION:", e.args)
+        finally :
+            return status
