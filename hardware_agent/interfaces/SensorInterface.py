@@ -16,6 +16,10 @@ from inspect import getmembers, ismethod
 class ISensor(ABC):
 
     @abstractmethod
+    def humidity(self) -> dict:
+        pass
+
+    @abstractmethod
     def orientation(self) -> dict:
         pass
 

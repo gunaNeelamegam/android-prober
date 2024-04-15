@@ -1,8 +1,9 @@
 from jnius import autoclass
 from platform import platform
+from typing import Union, Any
+
 if platform() == "android":
     from android.broadcast import BroadcastReceiver
-from typing import Union, Any
 
 class BluetoothAgent:
     if platform() == "android":

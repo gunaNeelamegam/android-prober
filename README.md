@@ -16,12 +16,12 @@
     ```
 
 
-
 * Library's we using
 
     * pyjnius
     * plyer
-    * flask
+    * flask # NEED's to fix
+    * kivy
 
 
 ##  Build and Run Example's

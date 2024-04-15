@@ -3,7 +3,6 @@ from inspect import getmembers, ismethod
 from flask import request
 from plyer.facades.camera import Camera
 from plyer import camera
-from plyer import flash
 from  os.path import exists,join
 # custom module
 from hardware_agent.wrappers import get,post

@@ -4,16 +4,16 @@ from plyer.facades.gps import GPS
 from plyer import gps
 
 # custom module
-from hardware_agent.wrappers import get, post
+from hardware_agent.wrappers import get
 from abc import ABC,abstractmethod
 
-class IGps(ABC):
+class IBattery(ABC):
 
     @abstractmethod
-    def battery_status(self)->dict:
+    def location(self)->dict:
         pass
 
-class GpsInterface(IGps):
+class GpsInterface(IBattery):
 
     """
     FIXME:
@@ -21,6 +21,7 @@ class GpsInterface(IGps):
     """
     def __init__(self) -> None:
         self.gps: GPS = gps
+        self.current_location :dict = dict()
         self.gps.configure(on_location = self.on_location_change, on_status= self.on_status_change)
 
     @get
@@ -44,6 +45,10 @@ class GpsInterface(IGps):
             "status": True,
             "message": "Gps Listener Stoped Successfully"
         }
+
+    @get
+    def location(self) -> dict:
+        return self.current_location
 
     @staticmethod
     def on_status_change(status: Any):

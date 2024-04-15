@@ -4,7 +4,7 @@
 title = tester
 
 # (str) Package name
-package.name = hardware_agent
+package.name = tester
 
 # (str) Package domain (needed for android/ios packaging)
 package.domain = com.guna
@@ -36,7 +36,7 @@ version = 0.1
 
 # (list) Application requirements
 # comma separated e.g. requirements = sqlite3,kivy
-requirements = python3,flask==2.2.5,Werkzeug==2.3.3,genericndkbuild,libffi,openssl,pyjnius
+requirements = python3,plyer,pyjnius,flask==2.2.5,Werkzeug==2.3.3,kivy,oscpy
 
 # (str) Custom source folders for requirements
 # Sets custom source for any requirements with recipes
@@ -56,6 +56,7 @@ orientation = portrait
 
 # (list) List of service to declare
 #services = NAME:ENTRYPOINT_TO_PY,NAME2:ENTRYPOINT2_TO_PY
+services = Tester:./hardware_agent/services/android_service.py:foreground:sticky
 
 #
 # OSX Specific
@@ -85,10 +86,10 @@ fullscreen = 0
 android.presplash_color = #FFFFFF
 
 # (list) Permissions
-android.permissions = INTERNET,BLUETOOTH_ADMIN,BLUETOOTH,BLUETOOTH_SCAN,ACCESS_BACKGROUND_LOCATION,ACCESS_FINE_LOCATION,BLUETOOTH_CONNECT
+android.permissions = INTERNET,BLUETOOTH_ADMIN,BLUETOOTH,BLUETOOTH_SCAN,ACCESS_BACKGROUND_LOCATION,ACCESS_FINE_LOCATION,BLUETOOTH_CONNECT, FOREGROUND_SERVICE
 
 # (int) Target Android API, should be as high as possible.
-android.api = 33
+android.api = 31
 
 # (int) Minimum API your APK will support.
 #android.minapi = 21
@@ -202,7 +203,7 @@ android.enableJetifier=true
 
 
 # (str) python-for-android git clone directory (if empty, it will be automatically cloned from github)
-p4a.source_dir = ./python-for-android
+# p4a.source_dir = ./python-for-android
 
 # (str) The directory in which python-for-android should look for your own build recipes (if any)
 #p4a.local_recipes =
@@ -211,10 +212,10 @@ p4a.source_dir = ./python-for-android
 #p4a.hook =
 
 # (str) Bootstrap to use for android builds
-p4a.bootstrap = webview
+# p4a.bootstrap = sdl2
 
 # (int) port number to specify an explicit --port= p4a argument (eg for bootstrap flask)
-p4a.port = 5000
+# p4a.port = 6000
 
 
 #
