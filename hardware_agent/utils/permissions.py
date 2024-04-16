@@ -14,7 +14,7 @@ class RuntimePermission:
     def on_permission_status_change(self, permissions, grants):
         print(f"PERMISSIONS {permissions} GRANTS : {grants}")
 
-    def location_permission(self):
+    def location_permission(self) -> bool:
         permission_status = {}
         for permission in self.location_permissions:
               response = check_permission(permission)
@@ -22,8 +22,9 @@ class RuntimePermission:
               print(f"{permission} : {response}")
         requesting_permissions = filter(lambda permission: not permission_status.get(permission), permission_status)
         request_permissions([*requesting_permissions], self.on_permission_status_change)
+        return True
 
-    def blutooth_permission(self):
+    def blutooth_permission(self) -> bool:
         loc_permission_status = {}
         for permission in self.ble_permissions:
             response = check_permission(permission)
@@ -31,3 +32,12 @@ class RuntimePermission:
             print(f"{permission}: {response}")
         requesting_permission = filter(lambda permission: not loc_permission_status.get(permission), loc_permission_status)
         request_permissions([*requesting_permission], self.on_permission_status_change)
+        return True
+
+    def telephony_permission(self)-> bool:
+        print("REQUESTING TELEPHONY PERMISSION")
+        status = check_permission(Permission.READ_PHONE_STATE)
+        if not status:
+            request_permissions([Permission.READ_PHONE_STATE], self.on_permission_status_change)
+            return True
+        return True

@@ -13,14 +13,22 @@ class BluetoothInterface(BluetoothAgent):
         if App.app is None:
             App.app = app
 
-    @get
+    @get(
+        summary= "Turn on Bluetooth",
+        description= "Using this Api we can able to turn on bluetooth\n Platform Support's Android",
+        response_model=[(200, 'Success'), (500, 'Error')]
+    )
     def turn_on_bluetooth(self) -> dict:
         status = self.enable_adapter()
         return {
             "status": status,
         }
 
-    @get
+    @get(
+        summary= "Turn Off Bluetooth",
+        description= "Using this Api we can able to turn off bluetooth\n Platform Support's Android",
+        response_model=[(200, 'Success'), (500, 'Error')]
+    )
     def turn_off_bluetooth(self) -> dict:
         status = self.disable_adapter()
         return {

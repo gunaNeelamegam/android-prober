@@ -25,7 +25,14 @@ class CameraInterface(ICamera):
         self.DEFAULT_PATH = ""
         self.DEFAULT_FILENAME = "test_camera.png"
 
-    @post
+    @post(
+            summary = "Take Picture",
+            description= "Using this Api Can able to Take Picture \n Supported Platform's Android, Linux, Windows, iOS",
+            request_model = {
+                "filename" : "string"
+            },
+            response_model= [(201, "Success"), (500, "Failure")]
+    )
     def take_picture(self) -> dict:
         filename = request.json.get("filename", self.DEFAULT_FILENAME)
         path = request.json.get("path", self.DEFAULT_PATH)
@@ -49,7 +56,14 @@ class CameraInterface(ICamera):
         else:
             print(f"{filepath} IS NOT EXIST")
 
-    @post
+    @post(
+        summary = "Capture Video",
+        description= "Using this Api Can able to Capture \n Supported Platform's Android, Linux, Windows, iOS",
+        request_model= {
+            "filename" : "string"
+        },
+        response_model =  [(201, "Success"), (500, "Failure")]
+    )
     def take_video(self, filepath: str) -> dict:
         filename = request.json.get("filename", self.DEFAULT_FILENAME)
         path = request.json.get("path", self.DEFAULT_PATH)

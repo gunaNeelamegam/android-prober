@@ -36,7 +36,7 @@ version = 0.1
 
 # (list) Application requirements
 # comma separated e.g. requirements = sqlite3,kivy
-requirements = python3,plyer,pyjnius,flask==2.2.5,Werkzeug==2.3.3,kivy,oscpy
+requirements = python3,plyer,pyjnius,flask==2.2.5,Werkzeug==2.3.3,kivy,oscpy,swagger-gen
 
 # (str) Custom source folders for requirements
 # Sets custom source for any requirements with recipes
@@ -86,7 +86,7 @@ fullscreen = 0
 android.presplash_color = #FFFFFF
 
 # (list) Permissions
-android.permissions = INTERNET,BLUETOOTH_ADMIN,BLUETOOTH,BLUETOOTH_SCAN,ACCESS_BACKGROUND_LOCATION,ACCESS_FINE_LOCATION,BLUETOOTH_CONNECT, FOREGROUND_SERVICE
+android.permissions = INTERNET,BLUETOOTH_ADMIN,BLUETOOTH,BLUETOOTH_SCAN,ACCESS_BACKGROUND_LOCATION,ACCESS_FINE_LOCATION,BLUETOOTH_CONNECT, FOREGROUND_SERVICE, RECEIVE_BOOT_COMPLETED, CALL_PHONE, READ_PHONE_STATE ,VIBRATE,NEW_OUTGOING_CALL, PROCESS_OUTGOING_CALLS
 
 # (int) Target Android API, should be as high as possible.
 android.api = 31
