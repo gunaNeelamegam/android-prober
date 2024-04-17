@@ -36,7 +36,7 @@ version = 0.1
 
 # (list) Application requirements
 # comma separated e.g. requirements = sqlite3,kivy
-requirements = python3,plyer,pyjnius,flask==2.2.5,Werkzeug==2.3.3,kivy,oscpy,swagger-gen
+requirements = python3,plyer,pyjnius,flask==2.2.5,Werkzeug==2.3.3,kivy==2.3.0,oscpy==0.6.0,swagger-gen==0.1.2
 
 # (str) Custom source folders for requirements
 # Sets custom source for any requirements with recipes
@@ -140,7 +140,7 @@ android.whitelist = unittest/*
 
 # (list) List of Java files to add to the android project (can be java or a
 # directory containing the files)
-android.add_src = java
+android.add_src = ./hardware_agent/java
 
 # (list) Android AAR archives to add (currently works only with sdl2_gradle
 # bootstrap)

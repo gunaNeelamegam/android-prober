@@ -3,7 +3,7 @@
 
 -->
 
-<receiver android:name="org.kivy.bootup.MyReceiver" android:enabled="true" android:exported="true">
+<receiver android:name="org.kivy.bootup.MyReceiver" android:enabled="true">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
                 <action android:name="android.intent.action.QUICKBOOT_POWERON" />
