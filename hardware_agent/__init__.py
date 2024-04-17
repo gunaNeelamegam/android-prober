@@ -3,6 +3,7 @@ from datetime import datetime
 from swagger_gen.swagger import Swagger
 from threading import Thread
 from os import path as _path, curdir
+
 #FIMXE: Use to create with proxy design pattern
 # reference https://github.com/kivy/plyer/blob/master/plyer/__init__.py
 
@@ -30,8 +31,6 @@ class App:
         cls.start_flask_server(host, port)
         register_interface(cls.app)
         cls.swagger.configure()
-        # As of now we static registering
-
         return cls.app
 
     @classmethod
@@ -60,8 +59,6 @@ class App:
         "next_release": str(datetime.now().date()),
         "status": False
     }
-
-
 
 def register_interface(app: Flask):
     """Using this function library try's to use the previously implemented functionality

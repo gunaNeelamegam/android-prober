@@ -13,7 +13,7 @@ package.domain = com.guna
 source.dir = .
 
 # (list) Source files to include (let empty to include all the files)
-source.include_exts = py,png,jpg,kv,atlas,html,css,otf,txt,jinja,yaml,yml,csv,json,txt
+source.include_exts = py,png,jpg,kv,atlas,html,css,otf,txt,jinja,yaml,yml,csv,json,txt,java
 
 # (list) List of inclusions using pattern matching
 #source.include_patterns = assets/*,images/*.png
@@ -89,7 +89,7 @@ android.presplash_color = #FFFFFF
 android.permissions = INTERNET,BLUETOOTH_ADMIN,BLUETOOTH,BLUETOOTH_SCAN,ACCESS_BACKGROUND_LOCATION,ACCESS_FINE_LOCATION,BLUETOOTH_CONNECT, FOREGROUND_SERVICE, RECEIVE_BOOT_COMPLETED, CALL_PHONE, READ_PHONE_STATE ,VIBRATE,NEW_OUTGOING_CALL, PROCESS_OUTGOING_CALLS
 
 # (int) Target Android API, should be as high as possible.
-android.api = 31
+android.api = 33
 
 # (int) Minimum API your APK will support.
 #android.minapi = 21
@@ -140,7 +140,7 @@ android.whitelist = unittest/*
 
 # (list) List of Java files to add to the android project (can be java or a
 # directory containing the files)
-#android.add_src =
+android.add_src = java
 
 # (list) Android AAR archives to add (currently works only with sdl2_gradle
 # bootstrap)
@@ -201,6 +201,7 @@ android.arch = armeabi-v7a
 android.useAndroidX=true
 android.enableJetifier=true
 
+# android.extra_manifest_xml = ./xml/AndroidManifest.xml
 
 # (str) python-for-android git clone directory (if empty, it will be automatically cloned from github)
 # p4a.source_dir = ./python-for-android
@@ -209,7 +210,7 @@ android.enableJetifier=true
 #p4a.local_recipes =
 
 # (str) Filename to the hook for p4a
-#p4a.hook =
+#p4a.hook = tools/hooks/hook.py
 
 # (str) Bootstrap to use for android builds
 # p4a.bootstrap = sdl2
