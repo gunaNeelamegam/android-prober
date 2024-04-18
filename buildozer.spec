@@ -22,7 +22,7 @@ source.include_exts = py,png,jpg,kv,atlas,html,css,otf,txt,jinja,yaml,yml,csv,js
 #source.exclude_exts = spec
 
 # (list) List of directory to exclude (let empty to not exclude anything)
-#source.exclude_dirs = tests, bin
+source.exclude_dirs = tests, bin, examples, xml
 
 # (list) List of exclusions using pattern matching
 #source.exclude_patterns = license,images/*/*.jpg
@@ -140,7 +140,7 @@ android.whitelist = unittest/*
 
 # (list) List of Java files to add to the android project (can be java or a
 # directory containing the files)
-android.add_src = ./hardware_agent/java
+android.add_src = java
 
 # (list) Android AAR archives to add (currently works only with sdl2_gradle
 # bootstrap)
@@ -204,7 +204,7 @@ android.enableJetifier=true
 # android.extra_manifest_xml = ./xml/AndroidManifest.xml
 
 # (str) python-for-android git clone directory (if empty, it will be automatically cloned from github)
-# p4a.source_dir = ./python-for-android
+p4a.source_dir = ./python-for-android
 
 # (str) The directory in which python-for-android should look for your own build recipes (if any)
 #p4a.local_recipes =
