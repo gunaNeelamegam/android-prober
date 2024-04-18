@@ -21,14 +21,29 @@ class CallInterface(ICall):
     def __init__(self) -> None:
         self.call: Call = call
 
-    @post
+    @post(
+        summary= "Make the Phone Call",
+        description= "Using this Api we can able to make call",
+        response_model=[(200, 'Success'), (500, 'Error')],
+        request_model = {
+            "phone_number": "number"
+        }
+    )
     def make_call(self):
-        phone_number = request.json.get("number")
-        return self.call.makecall(phone_number)
+        phone_number = request.json.get("phone_number" , "83973973793")
+        return self.call.makecall(tel = phone_number)
 
-    @get
+    @get(
+        summary= "Open the Dial Action",
+        description= "Using this Api we can able Open the dialer Activity",
+        response_model=[(200, 'Success'), (500, 'Error')],
+    )
     def dial_call(self) -> bool:
-        return self.call.dialcall()
+        self.call.dialcall()
+        return {
+            "success": True,
+            "message": "Dial Activity Opened Successfully"
+        }
 
     def __call__(self, *args: Any, **kwds: Any) -> Any:
         for key,value in getmembers(self, predicate= ismethod):

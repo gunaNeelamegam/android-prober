@@ -20,7 +20,11 @@ class FlashInterface(IFlash):
         self.status = False
         self.flash : Flash = flash
 
-    @get
+    @get(
+        summary = "Flash Off",
+        description= "Using this Api Can able to Turn off the flash on android device",
+        response_model =  [(201, "Success"), (500, "Failure")]
+    )
     def flash_off(self) -> dict:
         message = ""
         if self.status:
@@ -35,7 +39,11 @@ class FlashInterface(IFlash):
             "message":message
         }
 
-    @get
+    @get(
+        summary = "Flash on",
+        description= "Using this Api Can able to Turn on the flash on android device",
+        response_model =  [(201, "Success"), (500, "Failure")]
+    )
     def flash_on(self) -> dict:
         message = ""
         if not self.status:

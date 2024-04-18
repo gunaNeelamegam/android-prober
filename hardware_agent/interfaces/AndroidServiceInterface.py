@@ -25,7 +25,11 @@ class IAndroidService(ABC):
 
 class AndroidService(AndroidServiceAgent):
 
-    @get
+    @get(
+    summary= "Start the BroadCast Receiver as the Service",
+    description= "Using this Api We can able to Event's which are broadcasted by the android system",
+    response_model=[(200, 'Success'), (500, 'Error')]
+    )
     def start_service(self) -> dict:
         response = super().start_service()
         return {
@@ -33,7 +37,11 @@ class AndroidService(AndroidServiceAgent):
             "status": response
         }
 
-    @get
+    @get(
+    summary= "Stop the BroadCast Receiver as the Service",
+    description= "Using this Api We can able to Event's which are broadcasted by the android system",
+    response_model=[(200, 'Success'), (500, 'Error')]
+    )
     def stop_service(self) -> dict:
         status = super().stop_service()
         return {

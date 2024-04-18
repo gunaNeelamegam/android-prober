@@ -1,27 +1,29 @@
 from jnius import autoclass
 from platform import platform
 from typing import Union, Any
+from hardware_agent.utils.common import Platform
 
-if platform() == "android":
+if Platform.is_android():
     from android.broadcast import BroadcastReceiver
 
 class BluetoothAgent:
-    if platform() == "android":
+    if Platform.is_android():
         BluetoothAdapter = autoclass("android.bluetooth.BluetoothAdapter")
         BluetoothDevice  = autoclass("android.bluetooth.BluetoothDevice")
-    SERIAL_PORT_PROFILE_UUID = "00001101-0000-1000-8000-00805F9B34FB"
+        SERIAL_PORT_PROFILE_UUID = "00001101-0000-1000-8000-00805F9B34FB"
 
     def __init__(self) -> None:
-        self.scanned_devices = set()
-        self.connected_device = None
-        self.is_connected = False
-        if platform() == "android":
+        if Platform.is_android():
+            self.scanned_devices = set()
+            self.connected_device = None
+            self.is_connected = False
             self.ble_adapter = self.BluetoothAdapter.getDefaultAdapter()
             self.FOUND = self.BluetoothDevice.ACTION_FOUND
             self.STARTED = self.BluetoothAdapter.ACTION_DISCOVERY_STARTED
             self.FINISHED = self.BluetoothAdapter.ACTION_DISCOVERY_FINISHED
-        self.server_socket = None
+            self.server_socket = None
 
+    @Platform.android
     def on_scanning(self, context, intent):
         action = intent.getAction()
         if action == self.STARTED:
@@ -44,22 +46,21 @@ class BluetoothAgent:
             self.boardcast_receiver = None
             print("SCANNING STOPED")
 
+    # @Platform.android
     def enable_adapter(self) -> bool:
-        if platform() == "android":
-            if (self.ble_adapter and not self.ble_adapter.isEnabled()):
-                self.ble_adapter.enable()
-            return self.ble_adapter.isEnabled()
-        else:
-            return False
+        status = False
+        if (self.ble_adapter and not self.ble_adapter.isEnabled()):
+            self.ble_adapter.enable()
+            status = self.ble_adapter.isEnabled()
+        return status
 
+    @Platform.android
     def disable_adapter(self)->bool:
-        if platform() == "android":
-            if (self.ble_adapter and self.ble_adapter.isEnabled()):
-                self.ble_adapter.disable()
-            return self.ble_adapter.isEnabled()
-        else:
-            return False
+        if (self.ble_adapter and self.ble_adapter.isEnabled()):
+            self.ble_adapter.disable()
+        return self.ble_adapter.isEnabled()
 
+    @Platform.android
     def paired_devices(self):
         if self.ble_adapter:
             bounded_devices = self.ble_adapter.getBondedDevices().toArray()
@@ -68,12 +69,14 @@ class BluetoothAgent:
                 response.append((device.getName(), device.getAddress()))
         return response
 
+    @Platform.android
     def scan(self):
         actions = [self.FOUND, self.STARTED, self.FINISHED]
         self.boardcast_receiver = BroadcastReceiver(self.on_scanning, actions=actions)
         self.boardcast_receiver.start()
         self.ble_adapter.startDiscovery()
 
+    @Platform.android
     def is_device_paired(self, remote_info: dict) -> bool:
         name = remote_info.get("name", "").lower()
         mac_address = remote_info.get("mac_address","").lower()
@@ -87,38 +90,39 @@ class BluetoothAgent:
         filtered_devices = filter(is_equal, bounded_devices)
         return (True,filtered_devices[0]) if len(filtered_devices) else (False, None)
 
+    @Platform.android
     def pair(self, mac_address: str):
         if self.ble_adapter and mac_address.strip() != "":
             device = self.ble_adapter.getRemoteDevice(mac_address)
             if device and device.getBondState() != self.BluetoothDevice.BOND_BONDED:
                 device.createBond()
 
+    @Platform.android
     def connect(self, device_info: dict = {}):
-        if platform()  == "android":
-            self.connected_device = None
-            device = self.ble_adapter.getRemoteDevice(device_info.get("address"))
-            if device and device.getBondState()  != self.BluetoothDevice.BOND_NONE:
-                UUID = autoclass('java.util.UUID')
-                self.connected_device = device.createRfcommSocketToServiceRecord(UUID.fromString(self.SERIAL_PORT_PROFILE_UUID))
-                self.connected_device.getInputStream()
-                self.connected_device.getOutputStream()
-                self.connected_device.connect()
-                print("CONNECTED DEVICE : ", self.connected_device.isConnected(), self.connected_device.getRemoteDevice().toString())
+        self.connected_device = None
+        device = self.ble_adapter.getRemoteDevice(device_info.get("address"))
+        if device and device.getBondState()  != self.BluetoothDevice.BOND_NONE:
+            UUID = autoclass('java.util.UUID')
+            self.connected_device = device.createRfcommSocketToServiceRecord(UUID.fromString(self.SERIAL_PORT_PROFILE_UUID))
+            self.connected_device.getInputStream()
+            self.connected_device.getOutputStream()
+            self.connected_device.connect()
+            print("CONNECTED DEVICE : ", self.connected_device.isConnected(), self.connected_device.getRemoteDevice().toString())
 
+    @Platform.android
     def disconnect(self):
-        if platform() == "android":
-            if self.connected_device:
-                print("DISCONNECTED : ", self.connected_device.isConnected())
-                self.connected_device.close()
-                self.is_connected = False
-                self.connected_device = None
+        if self.connected_device:
+            print("DISCONNECTED : ", self.connected_device.isConnected())
+            self.connected_device.close()
+            self.is_connected = False
+            self.connected_device = None
 
+    @Platform.android
     def unpair(self, address: Union[str, Any]):
-        if platform() == "android":
-            if self.ble_adapter and address.strip():
-                device = self.ble_adapter.getRemoteDevice(address)
-                if (device.getBondState() == self.BluetoothDevice.BOND_BONDED):
-                    device.removeBond();
+        if self.ble_adapter and address.strip():
+            device = self.ble_adapter.getRemoteDevice(address)
+            if (device.getBondState() == self.BluetoothDevice.BOND_BONDED):
+                device.removeBond();
 
 
     class BleDevice:
@@ -126,6 +130,7 @@ class BluetoothAgent:
             self.name = name
             self.address = address
 
+        @Platform.android
         def __eq__(self, other):
             return isinstance(other, BluetoothAgent.BleDevice) and (self.name == other.name and self.address == other.address)
 

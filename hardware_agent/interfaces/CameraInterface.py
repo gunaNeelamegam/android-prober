@@ -34,11 +34,21 @@ class CameraInterface(ICamera):
             response_model= [(201, "Success"), (500, "Failure")]
     )
     def take_picture(self) -> dict:
-        filename = request.json.get("filename", self.DEFAULT_FILENAME)
-        path = request.json.get("path", self.DEFAULT_PATH)
-        filepath = join(path, filename)
-        self.camera.take_picture(filename = filepath, on_complete= self.picture_callback)
-        return
+        try:
+            filename = request.json.get("filename", self.DEFAULT_FILENAME)
+            path = request.json.get("path", self.DEFAULT_PATH)
+            filepath = join(path, filename)
+            self.camera.take_picture(filename = filepath, on_complete= self.picture_callback)
+            return {
+                "filepath":  filepath,
+                "status": True,
+                "message": "Successfully Picture Captured"
+            }
+        except Exception as e:
+            return {
+                "status": False,
+                "message": "".join(e.args)
+            }
 
     @staticmethod
     def picture_callback(filepath:str):
@@ -65,10 +75,16 @@ class CameraInterface(ICamera):
         response_model =  [(201, "Success"), (500, "Failure")]
     )
     def take_video(self, filepath: str) -> dict:
-        filename = request.json.get("filename", self.DEFAULT_FILENAME)
-        path = request.json.get("path", self.DEFAULT_PATH)
-        filepath = join(path, filename)
-        self.camera.take_video(filename = filepath, on_complete= self.video_callback)
+        try:
+            filename = request.json.get("filename", self.DEFAULT_FILENAME)
+            path = request.json.get("path", self.DEFAULT_PATH)
+            filepath = join(path, filename)
+            self.camera.take_video(filename = filepath, on_complete= self.video_callback)
+        except Exception as e:
+            return {
+                "status": False,
+                "message": "".join(e.args)
+            }
 
     def __call__(self, *args: Any, **kwds: Any) -> Any:
         for key,value in getmembers(self, predicate= ismethod):

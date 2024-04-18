@@ -2,7 +2,6 @@ from typing import Any
 from inspect import getmembers, ismethod
 from flask import Flask
 
-# custom module
 from hardware_agent import App
 from hardware_agent.wrappers import get
 from hardware_agent.agents import BluetoothAgent
@@ -10,6 +9,7 @@ from hardware_agent.agents import BluetoothAgent
 class BluetoothInterface(BluetoothAgent):
 
     def __init__(self, app: Flask = None) -> None:
+        super().__init__()
         if App.app is None:
             App.app = app
 

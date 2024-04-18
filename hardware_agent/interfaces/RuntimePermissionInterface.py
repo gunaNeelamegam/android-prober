@@ -24,20 +24,29 @@ class RunPermissionInterface(IRuntimePermission):
     def __init__(self) -> None:
         self.runtime_perm = RuntimePermission()
 
-    @run_on_ui_thread
-    @get
+    @get(
+        summary = "Request Location Permission",
+        description = "Using this API we can request the runtime permission for location in android",
+        response_model = [(200, "Success"), (400, "Failure")]
+    )
     def location_permission(self):
         status = self.runtime_perm.location_permission()
         return {"status": status, "permission": "Location Permission Requested"}
 
-    @run_on_ui_thread
-    @get
+    @get(
+        summary = "Request Bluetooth Permission",
+        description = "Using this API we can request the runtime permission for bluetooth in android",
+        response_model = [(200, "Success"), (400, "Failure")]
+    )
     def bluetooth_permission(self):
         status = self.runtime_perm.blutooth_permission()
         return {"status": status, "permission": "Bluetooth Permission Requested"}
 
-    @run_on_ui_thread
-    @get
+    @get(
+        summary = "Request Telephony Permission",
+        description = "Using this API we can request the runtime permission for Telephony in android",
+        response_model = [(200, "Success"), (400, "Failure")]
+    )
     def telephony_permission(self):
         status = self.runtime_perm.telephony_permission()
         return {"status": status, "permission": "Telephony Permission Requested"}

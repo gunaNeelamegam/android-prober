@@ -24,7 +24,11 @@ class GpsInterface(IBattery):
         self.current_location :dict = dict()
         self.gps.configure(on_location = self.on_location_change, on_status= self.on_status_change)
 
-    @get
+    @get(
+        summary = "Start the GPS Listener",
+        description= "Using this Api Can able to start the gps listener if the location change's response is given through socket's",
+        response_model =  [(201, "Success"), (500, "Failure")]
+    )
     def gps_start(self):
         """
         Start the listener for location change's
@@ -35,7 +39,11 @@ class GpsInterface(IBattery):
             "message": "Gps Listener Started Successfully"
         }
 
-    @get
+    @get(
+        summary = "Stop the GPS Listener",
+        description= "Using this Api Can able to stop the gps listener if the location change's response is given through socket's",
+        response_model =  [(201, "Success"), (500, "Failure")]
+    )
     def gps_stop(self):
         """
         Stop the Already started Listener which listening for location change's.
@@ -46,7 +54,11 @@ class GpsInterface(IBattery):
             "message": "Gps Listener Stoped Successfully"
         }
 
-    @get
+    @get(
+        summary = "Get the Current GPS Location",
+        description= "Using this Api Can able to current location",
+        response_model =  [(201, "Success"), (500, "Failure")]
+    )
     def location(self) -> dict:
         return self.current_location
 

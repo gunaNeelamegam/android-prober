@@ -23,20 +23,32 @@ class BrightnessInterface(IBrightness):
     def __init__(self) -> None:
         self.bright_ness:Brightness = brightness
 
-    @post
+    @post(
+        summary= "Set the Device Brightness",
+        description= "Using this Api we can able mutate the device brightness",
+        response_model=[(200, 'Success'), (500, 'Error')],
+        request_model = {
+            "level" : "number"
+        }
+    )
     def set_brightness(self) -> dict:
         requested_level:int = request.json.get("level")
-        self.bright_ness.set_level(requested_level)
+        if requested_level:
+            self.bright_ness.set_level(requested_level)
         return {
             "status": True,
             "level": self.bright_ness.current_level,
         }
 
-    @get
+    @get(
+        summary= "Get the Device Brightness",
+        description= "Using this Api we can able retrive the device brightness",
+        response_model=[(200, 'Success'), (500, 'Error')]
+    )
     def brightness(self)->dict:
         return {
             "status": True,
-            "level": self.bright_ness.current_level,
+            "level": str(self.bright_ness.current_level),
         }
 
     def __call__(self, *args: Any, **kwds: Any) -> Any:

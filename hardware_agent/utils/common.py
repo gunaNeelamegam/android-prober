@@ -1,6 +1,7 @@
 from os import environ
 from sys import platform as _sys_platform
-from functools import wraps, partial
+from functools import wraps
+
 def getplatform():
     kivy_build = environ.get('KIVY_BUILD', '')
     if kivy_build in {'android', 'ios'}:

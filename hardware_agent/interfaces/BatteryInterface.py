@@ -18,7 +18,11 @@ class BatteryInterface(IBattery):
     def __init__(self) -> None:
         self.battery: Battery = battery
 
-    @get
+    @get(
+    summary= "Battery Status",
+    description= "Using this Api We can able to retrive the battery status in android system",
+    response_model=[(200, 'Success'), (500, 'Error')]
+    )
     def battery_status(self) -> dict:
         status = self.battery.status
         return {
