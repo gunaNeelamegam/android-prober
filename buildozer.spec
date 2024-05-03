@@ -13,7 +13,7 @@ package.domain = com.guna
 source.dir = .
 
 # (list) Source files to include (let empty to include all the files)
-source.include_exts = py,png,jpg,kv,atlas,html,css,otf,txt,jinja,yaml,yml,csv,json,txt
+source.include_exts = py,png,jpg,kv,atlas,html,css,otf,txt,jinja,yaml,yml,csv,json,txt,java
 
 # (list) List of inclusions using pattern matching
 #source.include_patterns = assets/*,images/*.png
@@ -22,7 +22,7 @@ source.include_exts = py,png,jpg,kv,atlas,html,css,otf,txt,jinja,yaml,yml,csv,js
 #source.exclude_exts = spec
 
 # (list) List of directory to exclude (let empty to not exclude anything)
-#source.exclude_dirs = tests, bin
+source.exclude_dirs = tests, bin, examples, xml
 
 # (list) List of exclusions using pattern matching
 #source.exclude_patterns = license,images/*/*.jpg
@@ -36,7 +36,7 @@ version = 0.1
 
 # (list) Application requirements
 # comma separated e.g. requirements = sqlite3,kivy
-requirements = python3,plyer,pyjnius,flask==2.2.5,Werkzeug==2.3.3,kivy,oscpy
+requirements = python3,plyer,pyjnius,flask==2.2.5,Werkzeug==2.3.3,kivy==2.3.0,oscpy==0.6.0,swagger-gen==0.1.2
 
 # (str) Custom source folders for requirements
 # Sets custom source for any requirements with recipes
@@ -86,10 +86,10 @@ fullscreen = 0
 android.presplash_color = #FFFFFF
 
 # (list) Permissions
-android.permissions = INTERNET,BLUETOOTH_ADMIN,BLUETOOTH,BLUETOOTH_SCAN,ACCESS_BACKGROUND_LOCATION,ACCESS_FINE_LOCATION,BLUETOOTH_CONNECT, FOREGROUND_SERVICE
+android.permissions = READ_EXTERNAL_STORAGE, WRITE_EXTERNAL_STORAGE, INTERNET,BLUETOOTH_ADMIN,BLUETOOTH,BLUETOOTH_SCAN,ACCESS_BACKGROUND_LOCATION,ACCESS_FINE_LOCATION,BLUETOOTH_CONNECT, FOREGROUND_SERVICE, ACCESS_ALL_DOWNLOADS, RECEIVE_BOOT_COMPLETED, CALL_PHONE, READ_PHONE_STATE ,VIBRATE,NEW_OUTGOING_CALL, PROCESS_OUTGOING_CALLS
 
 # (int) Target Android API, should be as high as possible.
-android.api = 31
+android.api = 33
 
 # (int) Minimum API your APK will support.
 #android.minapi = 21
@@ -140,7 +140,7 @@ android.whitelist = unittest/*
 
 # (list) List of Java files to add to the android project (can be java or a
 # directory containing the files)
-#android.add_src =
+android.add_src = java
 
 # (list) Android AAR archives to add (currently works only with sdl2_gradle
 # bootstrap)
@@ -201,15 +201,16 @@ android.arch = armeabi-v7a
 android.useAndroidX=true
 android.enableJetifier=true
 
+# android.extra_manifest_xml = ./xml/AndroidManifest.xml
 
 # (str) python-for-android git clone directory (if empty, it will be automatically cloned from github)
-# p4a.source_dir = ./python-for-android
+p4a.source_dir = ./python-for-android
 
 # (str) The directory in which python-for-android should look for your own build recipes (if any)
 #p4a.local_recipes =
 
 # (str) Filename to the hook for p4a
-#p4a.hook =
+#p4a.hook = tools/hooks/hook.py
 
 # (str) Bootstrap to use for android builds
 # p4a.bootstrap = sdl2

@@ -49,12 +49,23 @@ class SensorInterface(ISensor):
         self.gravity_sen: Gravity = gravity
         self.orientation_sen :Orientation = orientation
 
-    @post
+    @post(
+        summary = "Set the Orientation for the device ",
+        description= "Using this Api Can able change the device orientation",
+        response_model =  [(201, "Success"), (500, "Failure")],
+        request_model = {
+           "type": "landscape (or) potrait"
+        }
+    )
     def orientation(self) -> dict:
         orientation_type = request.json.get("type", "landscape")
         getattr(self.orientation_sen, f"set_{orientation_type}")()
 
-    @get
+    @get(
+        summary = "Get the gravity for Device",
+        description= "Using this Api Can able to retrive the gravity from gravity sensor",
+        response_model =  [(201, "Success"), (500, "Failure")],
+    )
     def gravity(self) -> dict:
         self.gravity_sen.enable()
         data = {
@@ -64,7 +75,11 @@ class SensorInterface(ISensor):
         self.gravity_sen.disable()
         return data
 
-    @get
+    @get(
+        summary = "Get the Acceleration for Device",
+        description= "Using this Api Can able to retrive the acceleration from device sensor",
+        response_model =  [(201, "Success"), (500, "Failure")],
+    )
     def acceleration(self) -> dict:
         self.accelration_sen.enable()
         data = {
@@ -75,7 +90,11 @@ class SensorInterface(ISensor):
 
         return data
 
-    @get
+    @get(
+        summary = "Get the temperature for Device",
+        description= "Using this Api Can able to retrive the temperature from device sensor",
+        response_model =  [(201, "Success"), (500, "Failure")],
+    )
     def temperature(self) -> dict:
         self.temperature_sen.enable()
         data = {
@@ -85,7 +104,11 @@ class SensorInterface(ISensor):
         self.temperature.disable()
         return data
 
-    @get
+    @get(
+        summary = "Get the humidity for Device",
+        description= "Using this Api Can able to retrive the humidity from device sensor",
+        response_model =  [(201, "Success"), (500, "Failure")],
+    )
     def humidity(self) -> dict:
         # Supported Android
         self.humidity_sen.enable()
@@ -96,7 +119,11 @@ class SensorInterface(ISensor):
         self.humidity_sen.disable()
         return data
 
-    @get
+    @get(
+        summary = "Get the pressure for Device",
+        description= "Using this Api Can able to retrive the pressure from device sensor",
+        response_model =  [(201, "Success"), (500, "Failure")],
+    )
     def pressure(self) -> dict:
         self.barometer_sen.enable()
         data = {

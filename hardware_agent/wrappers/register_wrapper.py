@@ -3,6 +3,8 @@ from hardware_agent import App
 # Need's to move into different module
 from functools import wraps, partial
 from typing import Any, Union
+from swagger_gen.lib.wrappers import swagger_metadata
+
 
 """
 These methods are using for achiving the same functionality as JSONRPC
@@ -13,10 +15,11 @@ NEED's to WORK AROUND
     * reference same as expressjs
 
 """
-def get(func = None, handler_name: str = ''):
+
+def get(func = None, handler_name: str = '', **kwgs):
 
     if func is None:
-        return partial(get,handler_name = handler_name)
+        return partial(get,handler_name = handler_name, **kwgs)
 
     @wraps(func)
     def get_callback(*args,**kwargs):
@@ -32,18 +35,20 @@ def get(func = None, handler_name: str = ''):
         if len(args):
             callback = partial(func, args[0])
         callback.__name__ = handler_name
-        response = App.app.get(f"/{callback.__name__}")(callback)
-        return response
+        view_function = App.app.get(f"/{callback.__name__}")
+        fn = view_function(callback)
+        swagger_metadata(**kwgs)(callback)
+        return fn
 
     return get_callback
 
-def post(func, handler_name: str = ''):
+def post(func = None, handler_name: str = '', **kwgs):
 
     if func is None:
-        return partial(post, handler_name)
+        return partial(post, handler_name = handler_name ,**kwgs)
 
     @wraps(func)
-    def post_callback(*args,**kwargs):
+    def post_callback(*args, **kwargs):
         """
         Please pass the very first as instance of the class
         """
@@ -55,9 +60,12 @@ def post(func, handler_name: str = ''):
 
         if len(args):
             callback = partial(func, args[0])
+
         callback.__name__ = handler_name
-        response = App.app.post(f"/{callback.__name__}")(callback)
-        return response
+        view_function = App.app.post(f"/{callback.__name__}")
+        fn = view_function(callback)
+        swagger_metadata(**kwgs)(callback)
+        return fn
 
     return post_callback
 

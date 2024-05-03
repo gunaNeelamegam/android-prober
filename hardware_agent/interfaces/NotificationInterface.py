@@ -26,7 +26,17 @@ class NotificationInterface(INotification):
     def __init__(self) -> None:
         self.notification: Notification = notification
 
-    @post
+    @post(
+        summary = "Start the GPS",
+        description= "Using this Api Can able to start the gps listener if the location change's response is given through socket's",
+        response_model =  [(201, "Success"), (500, "Failure")],
+        request_model = {
+            "title": "string",
+            "message": "string",
+            "toast": "boolean",
+            "timeout": "number",
+        }
+    )
     def notify(self) -> dict:
         json = request.json
         message = Message(**json)

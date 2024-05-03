@@ -3,8 +3,7 @@ from inspect import getmembers, ismethod
 from flask import Flask, request
 from plyer.facades.email import Email
 from plyer import email
-from platform import platform
-
+from hardware_agent.utils.common import Platform
 # custom module
 from hardware_agent.wrappers import get,post
 from typing import NamedTuple
@@ -21,10 +20,28 @@ class EmailInterface:
     def __init__(self) -> None:
         self.email: Email = email
 
-    @post
+    @post(
+        summary = "Send Email",
+        description= "Using this Api Can able to Send Email \n Supported Platform's Android, Linux, Windows, iOS",
+        request_model= {
+            "recipient" : "string",
+            "subject": "string",
+            "text": "string",
+            "create_chooser": "boolean"
+        },
+        response_model =  [(201, "Success"), (500, "Failure")]
+    )
     def send_mail(self) -> dict:
+        """
+        {
+            "recipient" : "gunag5127@gmail.com",
+            "subject": "say hello to all",
+            "text": "Hello world from Guna",
+            "create_chooser": True
+        },
+        """
         email_msg = EmailMessage(**request.json)
-        if platform()  == "android" and email_msg.create_chooser:
+        if Platform.is_android()  and email_msg.create_chooser:
             self.email.send(
                 recipient = email_msg.recipient,
                 subject = email_msg.subject,

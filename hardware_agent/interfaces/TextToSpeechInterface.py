@@ -17,24 +17,21 @@ class TextToSpeechInterface(ITTS):
     def __init__(self) -> None:
         self.tts: TTS = tts
 
-    @post
+    @post(
+        summary = "Text to Speech",
+        description= "Using this Api Can able to send the text and speechable in android device",
+        response_model =  [(201, "Success"), (500, "Failure")],
+         request_model = {
+            "message": "string"
+        }
+    )
     def say(self) -> dict:
-        message = request.json.get("message", "")
-        if not message:
-            message = "HELLO WORLD"
+        message = request.json.get("message", "Say Hello")
         self.tts.speak(message)
         return {
             "message": f"{message} started to speak",
             "status": True
         }
-
-    """
-        FIMXE: Need's to compatiable
-    """
-    # @get(handler_name = "say")
-    # def get_say(self):
-    #     print("SAY INSIDE GET MEHOD")
-    #     return "GET SAY"
 
     def __call__(self, *args: Any, **kwds: Any) -> Any:
         for key,value in getmembers(self, predicate= ismethod):

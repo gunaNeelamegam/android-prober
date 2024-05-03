@@ -22,7 +22,11 @@ class VibrateInterface(IVibrate):
         self.vibrator : Vibrator = vibrator
         self.support = self.vibrator.exists()
 
-    @get
+    @get(
+        summary = "Cancel the vibrate",
+        description = "Using this API we can request to cancel the on-going vibration android",
+        response_model = [(200, "Success"), (400, "Failure")]
+    )
     def cancel_vibrate(self) -> dict:
         message = ""
         if self.support:
@@ -35,11 +39,19 @@ class VibrateInterface(IVibrate):
             "message": message
         }
 
-    @post
+    @post(
+        summary = "Cancel the vibrate",
+        description = "Using this API we can request to cancel the on-going vibration android",
+        response_model = [(200, "Success"), (400, "Failure")],
+        request_model = {
+            "count": 1,
+            "pattern": [1,2]
+        }
+    )
     def vibrate(self) -> dict:
         body = request.json
         vibration_count = body.get("count", 1)
-        vibration_pattern = body.get("pattern")
+        vibration_pattern = body.get("pattern" ,(1,2))
         repeat = body.get("repeat", -1)
         message = ""
         if self.support:
