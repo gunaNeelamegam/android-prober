@@ -1,5 +1,5 @@
 from flask import Flask as _Flask
-from _datetime import datetime as _datetime
+from datetime import datetime as _datetime
 from swagger_gen.swagger import Swagger as _Swagger
 from threading import Thread as _Thread
 from os import path as _path, curdir as _curdir
@@ -9,8 +9,7 @@ from os import path as _path, curdir as _curdir
 
 
 # Need's to done with better design but it required
-class App:
-
+class AndroidProber:
     app : _Flask = None
     swagger: _Swagger = None
     flask_thread = None
@@ -55,7 +54,7 @@ class App:
     def home_route():
         return {
         "author": "gunaNeelamegam.N",
-        "api": 1,
+        "api": "0.1.0",
         "next_release": str(_datetime.now().date()),
         "status": False
     }
@@ -66,8 +65,8 @@ def register_interface(app: _Flask):
     Args:
         app (_Flask): _Flask app instance
     """
-    if App.app is None:
-        App.app  = app
+    if AndroidProber.app is None:
+        AndroidProber.app  = app
     # ALL THE INTERFACE WILL RETURN THE INSTANCE OF THE CLASS
 
     from .interfaces.BluetoothInterface import register_bluetooth

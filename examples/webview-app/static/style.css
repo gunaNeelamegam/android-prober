@@ -1,0 +1,128 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: "Poppins";
+    color: white;
+    scroll-behavior: smooth;
+    box-sizing: border-box;
+}
+
+
+
+/*
+ * Navbar
+ */
+.menu {
+    font-family: "Poppins";
+    font-weight: 600;
+    top: 0;
+    margin: 0;
+    display: flex;
+    flex: 1;
+    height: 60px;
+    padding: 1rem 1rem;
+    align-items: center;
+    justify-content: space-around;
+    text-align: center;
+    background-color: #215732;
+    font-size: medium;
+    font-family: 'Poppins';
+    color: white;
+    flex-direction: row;
+    padding: 10px;
+    text-transform: uppercase;
+    opacity: 9;
+}
+
+.version {
+    position: absolute;
+    right: 3rem;
+}
+
+#machine-names {
+    border: 0;
+}
+
+
+.screen-btn {
+    background-color: #3f4443;
+    color: white;
+    padding: 1rem;
+    margin: 1rem 1rem;
+    border-radius: 10px;
+    border: 0;
+    text-transform: capitalize;
+}
+
+div.container button:hover {
+    font-size: large;
+    animation-name: screen-btn-ani;
+    animation-timing-function: ease-out;
+    animation-delay: 2s;
+    animation-duration: 4s;
+}
+
+.screen-btn:active {
+    background-color: #515756;
+    opacity: 0.5;
+    background: transparent;
+    animation-name: screen-btn-animation;
+    animation-timing-function: ease-out;
+    animation-duration: 4s;
+    animation-delay: 2s;
+}
+
+.main-container {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    justify-content: flex-start;
+    text-align: center;
+    margin: 0.5rem 0.5rem;
+}
+
+footer {
+    padding: 1rem 1rem;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: #215732;
+    color: #FFFFFF;
+    text-align: center;
+    height: 60px;
+}
+
+.footer-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+
+.footer-content div {
+    display: flex;
+    flex-direction: row;
+    align-items: baseline;
+    justify-content: baseline;
+    gap: 1rem;
+}
+
+.red-circle {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background-color: red;
+}
+
+.menu li {
+    list-style: none;
+}
+
+.menu li a {
+    color: #FFFFFF;
+    text-decoration: none;
+    text-transform: uppercase;
+    cursor: pointer;
+
+}
