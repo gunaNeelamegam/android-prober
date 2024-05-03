@@ -1,3 +1,19 @@
+Metadata-Version: 2.1
+Name: android-prober
+Version: 0.1.0
+Summary: Library for test android api's via service
+Home-page: https://github.com/gunaNeelamegam
+Author: GunaNeelamegam
+Author-email: gunag77730@gmail.com
+License: Apacher License 2.0
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: flask
+Requires-Dist: kivy
+Requires-Dist: oscpy
+Requires-Dist: plyer
+Requires-Dist: swagger-gen
+
 # Library mainly Concentrated on Android and iOS Hardware Testing Library
 
 # Supported platform's android, linux, iOS, windows, mac

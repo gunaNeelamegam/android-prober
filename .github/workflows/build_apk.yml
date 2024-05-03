@@ -7,6 +7,8 @@ jobs:
     steps:
       - name: checkout repo
         uses: actions/checkout@v4
+      - name: test
+        run: make test
       - name: build-apk
         run: make build
       - name: Archive APK

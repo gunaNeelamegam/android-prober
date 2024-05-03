@@ -5,8 +5,8 @@ from kivy.lang import Builder
 from kivy.utils import platform
 from threading import Thread
 
-from hardware_agent.agents import AndroidServiceAgent
-from hardware_agent import register_interface
+from android_prober.agents import AndroidServiceAgent
+from android_prober import register_interface
 
 if platform == 'android':
     from jnius import autoclass

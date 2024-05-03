@@ -11,7 +11,6 @@ public class MyReceiver extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         try {
             System.out.println("INSIDE BROADCAST RECEIVER");
-            Log.d("MyReceiver", "INSIDE REGISTER RECEIVER");
             String action = intent.getAction();
             if (action != null) {
                 if (action.equals(Intent.ACTION_BOOT_COMPLETED) || action.equals(Intent.ACTION_LOCKED_BOOT_COMPLETED)) {
