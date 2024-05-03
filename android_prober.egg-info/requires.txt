@@ -1,5 +1,0 @@
-flask
-kivy
-oscpy
-plyer
-swagger-gen

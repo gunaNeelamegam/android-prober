@@ -1,4 +1,0 @@
-android_prober
-dist
-java
-venv

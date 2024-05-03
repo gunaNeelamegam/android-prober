@@ -3,7 +3,7 @@ name: Upload Python Package
 on:
   push:
     branches:
-      - dev
+      - release
 
 jobs:
   publish:

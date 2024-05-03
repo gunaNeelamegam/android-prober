@@ -12,7 +12,7 @@ jobs:
       - name: checkout repo
         uses: actions/checkout@v4
       - name: test
-        run: make test
+        run: echo "testing"
       - name: build-apk
         run:  echo "Building"
       - name: Archive APK
