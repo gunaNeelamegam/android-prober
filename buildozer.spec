@@ -19,6 +19,10 @@ android.arch = armeabi-v7a
 android.useAndroidX=true
 android.enableJetifier=true
 
+# specific to webview
+# p4a.port =  6000
+# p4a.bootstrap = webview (or)  default as sld2
+
 [buildozer]
 log_level = 2
 warn_on_root = 1
