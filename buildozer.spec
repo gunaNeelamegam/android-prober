@@ -204,7 +204,7 @@ android.enableJetifier=true
 # android.extra_manifest_xml = ./xml/AndroidManifest.xml
 
 # (str) python-for-android git clone directory (if empty, it will be automatically cloned from github)
-p4a.source_dir = ./python-for-android
+# p4a.source_dir = ./python-for-android
 
 # (str) The directory in which python-for-android should look for your own build recipes (if any)
 #p4a.local_recipes =

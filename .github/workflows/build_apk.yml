@@ -1,0 +1,17 @@
+name: apk_build
+
+on: push
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout repo
+        uses: actions/checkout@v4
+      - name: build-apk
+        run: make build
+      - name: Archive APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: upload-apk
+          path: bin/*.apk
+            
