@@ -55,23 +55,3 @@ class Tester(App):
 
 if __name__ == '__main__':
     Tester().run()
-
-
-"""
-# Reference for using the MyReceiver which is created as the custom java class inside
-
-from jnius import autoclass
-from kivy.logger import Logger
-from kivy.clock import  Clock
-
-inside any function which is implicitly called
-Clock.schedule_once(self.start, 5)
-
- def start(self, dt):
-        try:
-            MyReceiver = autoclass("org.kivy.bootup.MyReceiver")
-            Logger.info(f"{str(MyReceiver)=} ON START")
-        except Exception as e:
-            Logger.info(f" EXCEPTION : {e.args}")
-
-"""
