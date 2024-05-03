@@ -50,6 +50,7 @@
   * plyer
   * flask
   * kivy
+  * oscpy
 
 ##  Build and Run Example's
 
