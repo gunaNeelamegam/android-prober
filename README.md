@@ -57,27 +57,21 @@
 **Requirements Installation**
 
 ```sh
-pip3 install -r requirements
+pip3 install -r requirements.txt
 ```
 
-**command to genarate apk**
-
+**Build Debug APK**
 ```sh
-make build
+    buildozer android debug
 ```
 
-**clean**
-
+**Build And Run into Target Machine**
 ```sh
-make clean
+    buildozer android debug deploy run
 ```
 
-> NOTE 
+> NOTE Example main file💡  
 ## Example `main.py`
-* Please Place the main.py in root folder or the project and change the 
-
-# (str) Source code where the main.py live
-source.dir = ./examples # Replace as . 
 
 ```python
 from kivy.app import App
