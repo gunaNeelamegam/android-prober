@@ -1,7 +1,14 @@
 # Library mainly Concentrated on Android and iOS Hardware Testing Library
 
-# Supported platform's android, linux, iOS, windows, mac
 
+## Supported platform's android, linux, iOS, windows, mac
+
+### `Installation`
+```sh
+pip3 install android-prober
+    (or)
+pip install android-prober
+```
 
 ## Trying to achive
 
