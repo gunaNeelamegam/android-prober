@@ -2,7 +2,7 @@
 
 ## Library to test the AOSP Hardware APIs
 
-> Currently Available APIs
+> **Currently Available APIs**
 
 * [X]  Bluetooth   ᛒ
     > ABLE TO DO
@@ -51,8 +51,8 @@ pip install android-prober
 ```python
 from kivy.app import App
 from kivy.lang import Builder
-from android_prober.utils.permissions import RuntimePermission
-from android_prober import App as TesterApp
+from android_prober import AndroidProber
+from requests import get
 
 KV = '''
 BoxLayout:
@@ -78,23 +78,28 @@ BoxLayout:
             text_size: self.size[0], None
 '''
 
-class Tester(App):
+class BluetoothTestViaWebService(App):
+    
+    BASE_URL = "http://localhost:5000"
 
     def init(self):
-        self.permission = RuntimePermission()
+        """ while using webservice to invoke the API's """
         TesterApp.use_flaskapp()
 
     def on_pause(self):
         return True
 
     def telephony_permission(self):
-        self.permission.telephony_permission()
+        response = get(f"{BASE_URL}/telephony_permission")
+        print(response.json)
 
     def location_permission(self):
-        self.permission.location_permission()
+        response = get(f"{BASE_URL}/location_permission")
+        print(response.json)
 
     def bluetooth_permission(self):
-        self.permission.blutooth_permission()
+        response = get(f"{BASE_URL}/bluetooth_permission")
+        print(response.json)
 
     def build(self):
         self.init()
@@ -102,7 +107,59 @@ class Tester(App):
         return self.root
 
 if __name__ == '__main__':
-    Tester().run()
+    BluetoothTestViaWebService().run()
+
+```
+
+
+* Create `main.py` without webservice.
+
+```python
+from kivy.app import App
+from kivy.lang import Builder
+from android_prober import AndroidProber
+from android_prober import bluetooth
+
+KV = '''
+BoxLayout:
+    orientation: 'vertical'
+    BoxLayout:
+        size_hint_y: None
+        height: '30sp'
+        Button:
+            text: 'telephony_permission'
+            on_press: app.telephony_permission()
+        Button:
+            text: 'bluetoothPermission'
+            on_press: app.bluetooth_permission()
+        Button:
+            text: 'locationPermission'
+            on_press: app.location_permission()
+
+    ScrollView:
+        Label:
+            id: label
+            size_hint_y: None
+            height: self.texture_size[1]
+            text_size: self.size[0], None
+'''
+
+class BluetoothTest(App):
+
+    def on_pause(self):
+        return True
+
+    def bluetooth_permission(self):
+       response = bluetooth.bluetooth_permission()
+        print(response)
+
+    def build(self):
+        self.root = Builder.load_string(KV)
+        return self.root
+
+if __name__ == '__main__':
+    BluetoothTest().run()
+
 ```
 
 ##  Build & Run
@@ -117,7 +174,11 @@ Install the generated apk into the target device.
 
 ## Documentation
 
-* Inside there is an web service running on port 5000. 
+* kivy app internally start and runnig web service running on port 5000. 
+
+* You can also test api on Single Click.
+
+![image](./android_prober/docs/images/swagger_ui.png)
 
 * Connect the device using ADB.
 

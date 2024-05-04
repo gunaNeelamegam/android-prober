@@ -1,6 +1,6 @@
 from kivy.app import App
 from kivy.lang import Builder
-from android_prober import AndroidProber
+from android_prober import AndroidProber, bluetooth, brightness, battery, tts
 
 
 KV = '''
@@ -30,22 +30,28 @@ BoxLayout:
 class Tester(App):
 
     def init(self):
-        self.permission = RuntimePermission()
-        TesterApp.use_flaskapp()
-
-
+        self.permission = None
+        AndroidProber.use_flaskapp()
+        
     def on_pause(self):
         super().on_pause()
         return True
 
     def telephony_permission(self):
-        self.permission.telephony_permission()
-
+        pass
+    
     def location_permission(self):
-        self.permission.location_permission()
+        pass
+        # tts.say("Helo world")        
+        # print(brightness)
+        # print(brightness.brightness())
+        # tts.say("HELLO WORLD")
+        # battery.battery_status()
+        # self.permission.location_permission()
 
     def bluetooth_permission(self):
-        self.permission.blutooth_permission()
+        pass
+        # self.permission.blutooth_permission()
 
     def build(self):
         self.init()

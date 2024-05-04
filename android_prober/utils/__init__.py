@@ -1,2 +1,1 @@
-from .common import platform, getplatform, Platform
-from .permissions import RuntimePermission
+from android_prober.utils.common import platform, Platform

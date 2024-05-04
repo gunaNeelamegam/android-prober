@@ -2,6 +2,10 @@ from setuptools import setup
 from setuptools import find_namespace_packages
 from pathlib import Path
 from os import path
+from sys import version_info
+
+if version_info <= (3,10):
+    exit("Requires more or equal to python3.10")
 
 current_path = Path(__file__).parent
 full_path = path.join(current_path, "README.md")
@@ -31,7 +35,7 @@ setup(
     packages= find_namespace_packages(exclude = excludes),
     long_description_content_type= "text/markdown",
     py_modules = ["android_prober"],
-    install_requires = ["flask","kivy", "oscpy", "plyer", "swagger-gen"]
+    install_requires = ["flask","kivy", "oscpy", "plyer", "swagger-gen", "pyjnius==1.6.1"]
 )
 
 
