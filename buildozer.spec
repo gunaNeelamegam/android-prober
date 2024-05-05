@@ -8,7 +8,7 @@ source.exclude_dirs = tests, bin, examples, xml
 version = 0.1
 requirements = python3,plyer,pyjnius,flask==2.2.5,Werkzeug==2.3.3,kivy==2.3.0,oscpy==0.6.0,swagger-gen==0.1.2
 orientation = portrait
-services = Tester:./android_prober/services/android_service.py:foreground:sticky
+services = Tester:./android_prober/services/android/android_service.py:foreground:sticky
 fullscreen = 0
 android.presplash_color = #FFFFFF
 android.permissions = READ_EXTERNAL_STORAGE, WRITE_EXTERNAL_STORAGE, INTERNET,BLUETOOTH_ADMIN,BLUETOOTH,BLUETOOTH_SCAN,ACCESS_BACKGROUND_LOCATION,ACCESS_FINE_LOCATION,BLUETOOTH_CONNECT, FOREGROUND_SERVICE, ACCESS_ALL_DOWNLOADS, RECEIVE_BOOT_COMPLETED, CALL_PHONE, READ_PHONE_STATE ,VIBRATE,NEW_OUTGOING_CALL, PROCESS_OUTGOING_CALLS

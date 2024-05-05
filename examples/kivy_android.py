@@ -2,7 +2,7 @@
 pip or pip3 install android-prober
 """
 
-from kivy.app import App
+from kivy.app import AndroidProber
 from kivy.lang import Builder
 from android_prober import AndroidProber
 from android_prober.utils.permissions import RuntimePermission
@@ -31,7 +31,7 @@ BoxLayout:
             text_size: self.size[0], None
 '''
 
-class TestAndroid(App):
+class TestAndroid(AndroidProber):
 
     def init(self):
         self.permission = RuntimePermission()
