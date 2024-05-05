@@ -1,20 +1,8 @@
-# Library mainly Concentrated on Android and iOS Hardware Testing Library
+# Android API Testing 
 
+## Library to test the AOSP Hardware APIs
 
-## Supported platform's android, linux, iOS, windows, mac
-
-### `Installation`
-```sh
-pip3 install android-prober
-    (or)
-pip install android-prober
-```
-
-## Trying to achive
-
-* `Library to test the android internal Hardware Service's`
-
-> Developed and Tested
+> Currently Available APIs
 
 * [X]  Bluetooth   ᛒ
     > ABLE TO DO
@@ -50,42 +38,21 @@ pip install android-prober
     * Incoming Phone Call 📲
     * more...
 
-> NOTE 💡 
-> 
-> `Python Module's`
-  * pyjnius
-  * plyer
-  * flask
-  * kivy
-  * oscpy
-
-##  Build and Run Example's
-
-**Requirements Installation**
+## Installation
 
 ```sh
-pip3 install -r requirements.txt
+pip install android-prober
 ```
 
-**Build Debug APK**
-```sh
-    buildozer android debug
-```
+## Usage
 
-**Build And Run into Target Machine**
-```sh
-    buildozer android debug deploy run
-```
-
-> NOTE Example main file💡  
-## Example `main.py`
+* Create `main.py` like the contents below.
 
 ```python
 from kivy.app import App
 from kivy.lang import Builder
-from hardware_agent.utils.permissions import RuntimePermission
-from hardware_agent import App as TesterApp
-
+from android_prober.utils.permissions import RuntimePermission
+from android_prober import App as TesterApp
 
 KV = '''
 BoxLayout:
@@ -138,27 +105,30 @@ if __name__ == '__main__':
     Tester().run()
 ```
 
-> `Way to Use Doc's`
+##  Build & Run
 
-* If you are enabled developer mode. adb daemon will start's or started automatically.
+```sh
+pip install -r requirements.txt
 
-* Run the following command.
+buildozer android debug
+```
+Install the generated apk into the target device.
 
+
+## Documentation
+
+* Inside there is an web service running on port 5000. 
+
+* Connect the device using ADB.
+
+* If your using adb via cable, Run this to expose the port `tcp/5000`
 ```bash
 adb forward tcp:5000 tcp:5000
 ```
-* `why tcp:5000` ?
-  
-  * Inside the Flask Application service will run on tcp:5000 port. So, we trying to expose the port inside the phone 📱 to desktop or development enviroment.
 
-* Open the any web browser 🌐
-* [API Documentation](http://localhost:5000/docs) 
-* If the previous Link not works try below.
-```bash
-    http://ipaddress:5000/docs (please replace the ip-address with the mobile connected network ip)
-```
+## Upcomming updates
 
-### `Looking for` 🚀
+-> https://github.com/gunaNeelamegam/android-prober/issues
 
 * Stablity
 * API for All Other Interface's
