@@ -5,7 +5,7 @@ from android_prober import battery
 
 from android_prober.wrappers import get
 
-class BatteryInterface:
+class Battery:
 
     def __init__(self) -> None:
         self.battery: Battery = battery
@@ -15,7 +15,7 @@ class BatteryInterface:
     description= "Using this Api We can able to retrive the battery status in android system",
     response_model=[(200, 'Success'), (500, 'Error')]
     )
-    def battery_status(self) -> dict:
+    def status(self) -> dict:
         return self.battery.status()
 
     def __call__(self, *args: Any, **kwds: Any) -> Any:
@@ -24,6 +24,6 @@ class BatteryInterface:
                 value()
 
 def register_battery():
-    battery_interface =  BatteryInterface()
+    battery_interface =  Battery()
     battery_interface()
     return battery_interface

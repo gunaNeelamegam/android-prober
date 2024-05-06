@@ -26,19 +26,19 @@ from requests import get
 from time import sleep
 PORT = 5000
 HOST = "0.0.0.0"
-PROTO = 'http://'
+PROTO = 'http://localhost:5000'
 
 
 def index():
-    response = get(f"{PROTO}{HOST}:{PORT}/")
+    response = get(f"{PROTO}/{HOST}:{PORT}/")
     try:
         print(response.json())
     except Exception as e:
         print(response.text)
 
 def enable_bluetooth():
-    METHOD_NAME = "turn_on_bluetooth"
-    response = get(f"{PROTO}{HOST}:{PORT}/{METHOD_NAME}")
+    METHOD_NAME = "enable"
+    response = get(f"{PROTO}/{HOST}:{PORT}/{METHOD_NAME}")
     try:
         print(response.json())
     except Exception as e:
@@ -46,7 +46,7 @@ def enable_bluetooth():
 
 def disable_bluetooth():
     METHOD_NAME = "turn_off_bluetooth"
-    response = get(f"{PROTO}{HOST}:{PORT}/{METHOD_NAME}")
+    response = get(f"{PROTO}/{HOST}:{PORT}/{METHOD_NAME}")
     try:
         print(response.json())
     except Exception as e:

@@ -5,7 +5,7 @@ from android_prober.facades import Sensor
 from android_prober.wrappers import get, post
 from inspect import getmembers, ismethod
 
-class SensorInterface:
+class Sensor:
 
     def __init__(self) -> None:
         self.sensor: Sensor = sensor
@@ -67,7 +67,7 @@ class SensorInterface:
                 value()
 
 def register_vibrate():
-    sensor_interface = SensorInterface()
+    sensor_interface = Sensor()
     sensor_interface()
     return sensor_interface
 

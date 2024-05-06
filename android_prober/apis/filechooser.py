@@ -1,12 +1,11 @@
 from typing import Any
 from inspect import getmembers, ismethod
 from flask import request
-from plyer import filechooser
-from plyer.facades import FileChooser
+from android_prober import filechooser
+from android_prober.facades import FileChooser
 
 # custom module
-from android_prober.wrappers import get, post
-from abc import ABC,abstractmethod
+from android_prober.wrappers import post
 
 mime_type = {
         "doc": "application/msword",
@@ -26,20 +25,6 @@ mime_type = {
         "audio": "audio/*",
         "application": "application/*"}
 
-class IFileChooser(ABC):
-
-    @abstractmethod
-    def open_file(self):
-        pass
-
-    @abstractmethod
-    def save_file(self):
-        pass
-
-    @abstractmethod
-    def choose_dir(self):
-        pass
-
 from typing import NamedTuple
 
 class FileChooseRequest(NamedTuple):
@@ -51,10 +36,10 @@ class FileChooseRequest(NamedTuple):
     show_hidden: bool = False
     icon: str = ""
 
-class FileChooserInterface(IFileChooser):
+class FileChooser:
 
     def __init__(self) -> None:
-        self.filechooser = filechooser
+        self.filechooser:FileChooser = filechooser
 
     @post(
         summary= "Open the file chooser window",
@@ -149,6 +134,6 @@ class FileChooserInterface(IFileChooser):
                 value()
 
 def register_filechooser():
-    filechooser_interface  =  FileChooserInterface()
+    filechooser_interface  =  FileChooser()
     filechooser_interface()
     return filechooser_interface

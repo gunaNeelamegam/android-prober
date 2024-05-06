@@ -5,7 +5,7 @@ from flask import request
 from android_prober.facades import TTS
 from android_prober import tts
 
-class TextToSpeechInterface:
+class TextToSpeech:
 
     def __init__(self) -> None:
         self.tts: TTS = tts
@@ -27,6 +27,6 @@ class TextToSpeechInterface:
                     value()
 
 def register_tts():
-    ttsInterface = TextToSpeechInterface()
+    ttsInterface = TextToSpeech()
     ttsInterface()
     return ttsInterface

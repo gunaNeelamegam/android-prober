@@ -5,7 +5,7 @@ from inspect import getmembers, ismethod
 from android_prober.facades import Vibrator
 from android_prober import vibrator
 
-class VibrateInterface:
+class Vibrator:
 
     def __init__(self) -> None:
         self.vibrator : Vibrator = vibrator
@@ -36,6 +36,6 @@ class VibrateInterface:
                 value()
 
 def register_vibrate():
-    vibration_interface = VibrateInterface()
+    vibration_interface = Vibrator()
     vibration_interface()
     return vibration_interface

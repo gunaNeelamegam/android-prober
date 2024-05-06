@@ -1,10 +1,9 @@
 from typing import Any
 from inspect import getmembers, ismethod
-from flask import Flask, request
-from plyer.facades.email import Email
-from plyer import email
+from flask import request
+from android_prober.facades.email import Email
+from android_prober import email
 from android_prober.utils.common import Platform
-# custom module
 from android_prober.wrappers import get,post
 from typing import NamedTuple
 
@@ -15,7 +14,7 @@ class EmailMessage(NamedTuple):
     create_chooser: str
 
 
-class EmailInterface:
+class Email:
 
     def __init__(self) -> None:
         self.email: Email = email
@@ -65,6 +64,6 @@ class EmailInterface:
                 value()
 
 def register_email():
-    email_interface =  EmailInterface()
+    email_interface =  Email()
     email_interface()
     return email_interface
