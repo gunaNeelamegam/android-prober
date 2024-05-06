@@ -4,7 +4,7 @@ from android_prober.wrappers import get
 from android_prober import bluetooth
 from android_prober.facades import Bluetooth
 
-class BluetoothInterface:
+class Bluetooth:
 
     def __init__(self) -> None:
         self.bluetooth: Bluetooth = bluetooth
@@ -13,7 +13,7 @@ class BluetoothInterface:
         description= "Using this Api we can able to turn on bluetooth\n Platform Support's Android",
         response_model=[(200, 'Success'), (500, 'Error')]
     )
-    def turn_on_bluetooth(self) -> dict:
+    def enable(self) -> dict:
         return self.bluetooth.enable()
 
     @get(
@@ -21,7 +21,7 @@ class BluetoothInterface:
         description= "Using this Api we can able to turn off bluetooth\n Platform Support's Android",
         response_model=[(200, 'Success'), (500, 'Error')]
     )
-    def turn_off_bluetooth(self) -> dict:
+    def disable(self) -> dict:
         return self.bluetooth.disable()
 
     def __call__(self, *args: Any, **kwds: Any) -> Any:
@@ -30,6 +30,6 @@ class BluetoothInterface:
                 value()
 
 def register_bluetooth():
-    bluetoothAgent = BluetoothInterface()
+    bluetoothAgent = Bluetooth()
     bluetoothAgent()
     return bluetoothAgent

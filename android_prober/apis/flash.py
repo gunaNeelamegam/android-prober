@@ -1,21 +1,9 @@
-from plyer.facades.flash import Flash
-from plyer import flash
-from abc import abstractmethod, ABC
+from android_prober.facades import Flash
+from android_prober import flash
 from android_prober.wrappers import get
 from typing import Any
 from inspect import getmembers, ismethod
-
-class IFlash(ABC):
-
-    @abstractmethod
-    def flash_on(self)->dict:
-        pass
-
-    @abstractmethod
-    def flash_off(self) -> dict:
-        pass
-
-class FlashInterface(IFlash):
+class Flash:
     def __init__(self) -> None:
         self.status = False
         self.flash : Flash = flash
@@ -63,6 +51,6 @@ class FlashInterface(IFlash):
 
 
 def register_flash():
-    flash_interface = FlashInterface()
+    flash_interface = Flash()
     flash_interface()
     return flash_interface

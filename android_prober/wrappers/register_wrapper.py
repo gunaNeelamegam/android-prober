@@ -32,6 +32,11 @@ def get(func = None, handler_name: str = '', **kwgs):
         Please pass the very first as instance of the class
         """
         nonlocal handler_name
+        class_name = func.__qualname__.split(".")
+        
+        if any(class_name):
+            class_name = class_name[0].lower()
+        
         if handler_name:
             pass
         else:
@@ -39,9 +44,13 @@ def get(func = None, handler_name: str = '', **kwgs):
 
         if len(args):
             callback = partial(func, args[0])
+
         callback.__name__ = handler_name
-        view_function = AndroidProber.app.get(f"/{callback.__name__}")
-        print("AFTER INCLUDE AS VIEW FUNCTION", view_function.__qualname__, view_function.__name__)
+        if class_name:
+            view_function = AndroidProber.app.get(f"/{class_name}/{callback.__name__}")
+        else:
+            view_function = AndroidProber.app.get(f"/{callback.__name__}")
+        
         fn = view_function(callback)
         swagger_metadata(**kwgs)(callback)
         return fn
@@ -59,6 +68,11 @@ def post(func = None, handler_name: str = '', **kwgs):
         Please pass the very first as instance of the class
         """
         nonlocal handler_name
+        class_name = func.__qualname__.split(".")
+        
+        if any(class_name):
+            class_name = class_name[0].lower()
+        
         if handler_name:
             pass
         else:
@@ -67,7 +81,11 @@ def post(func = None, handler_name: str = '', **kwgs):
             callback = partial(func, args[0])
         
         callback.__name__ = handler_name
-        view_function = AndroidProber.app.post(f"/{callback.__name__}")
+        if class_name:
+            view_function = AndroidProber.app.post(f"/{class_name}/{callback.__name__}")
+        else: 
+            view_function = AndroidProber.app.post(f"/{callback.__name__}")
+
         fn = view_function(callback)
         swagger_metadata(**kwgs)(callback)
         return fn

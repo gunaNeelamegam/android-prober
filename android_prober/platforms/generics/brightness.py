@@ -13,13 +13,13 @@ class GenericBrightness(Brightness):
             self.bright_ness.set_level(brightness_level)
         return {
             "status": True,
-            "level": self.bright_ness.current_level,
+            "level": self.bright_ness.current_level(),
         }
     
     def brightness(self)-> dict:
         return {
             "status": True,
-            "level": str(self.bright_ness.current_level),
+            "level": str(self.bright_ness.current_level()),
         }
 
 @lru_cache    

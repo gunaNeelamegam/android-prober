@@ -5,7 +5,7 @@ from android_prober.wrappers import post
 from flask import request
 from typing import Any
 
-class NotificationInterface:
+class Notification:
 
     def __init__(self) -> None:
         self.notification: Notification = notification
@@ -31,6 +31,6 @@ class NotificationInterface:
                 value()
 
 def register_notify():
-    notificationInterface = NotificationInterface()
+    notificationInterface = Notification()
     notificationInterface()
     return notificationInterface

@@ -4,7 +4,7 @@ from android_prober.wrappers import get
 from android_prober.facades import GPS
 from android_prober import gps
 
-class GpsInterface:
+class Gps:
 
     """
     FIXME:
@@ -58,6 +58,6 @@ class GpsInterface:
                     value()
 
 def register_gps():
-    gps_interface =  GpsInterface()
+    gps_interface =  Gps()
     gps_interface()
     return gps_interface

@@ -1,28 +1,15 @@
 from typing import Any
 from inspect import getmembers, ismethod
 from flask import request
-from plyer.facades.brightness import Brightness
-from plyer import brightness
-
-# custom module
+from android_prober.facades.brightness import Brightness
+from android_prober import brightness
 from android_prober.wrappers import get, post
-from abc import ABC,abstractmethod
-
-class IBrightness(ABC):
-
-    @abstractmethod
-    def brightness(self)->dict:
-        pass
-
-    @abstractmethod
-    def set_brightness(self)->dict:
-        pass
-
-class BrightnessInterface(IBrightness):
+class Brightness:
 
     def __init__(self) -> None:
-        self.bright_ness:Brightness = brightness
+        self.bright_ness: Brightness = brightness
 
+    # FIXME: overrides the class dictionary when createing methods with same name
     @post(
         summary= "Set the Device Brightness",
         description= "Using this Api we can able mutate the device brightness",
@@ -32,13 +19,8 @@ class BrightnessInterface(IBrightness):
         }
     )
     def set_brightness(self) -> dict:
-        requested_level:int = request.json.get("level")
-        if requested_level:
-            self.bright_ness.set_level(requested_level)
-        return {
-            "status": True,
-            "level": self.bright_ness.current_level,
-        }
+        requested_level:int = request.json.get("level", 10)
+        return self.bright_ness.set_brightness(requested_level)
 
     @get(
         summary= "Get the Device Brightness",
@@ -46,10 +28,7 @@ class BrightnessInterface(IBrightness):
         response_model=[(200, 'Success'), (500, 'Error')]
     )
     def brightness(self)->dict:
-        return {
-            "status": True,
-            "level": str(self.bright_ness.current_level),
-        }
+        return self.bright_ness.brightness()
 
     def __call__(self, *args: Any, **kwds: Any) -> Any:
         for key,value in getmembers(self, predicate= ismethod):
@@ -57,6 +36,6 @@ class BrightnessInterface(IBrightness):
                 value()
 
 def register_brightness():
-    brightness_interface =  BrightnessInterface()
+    brightness_interface =  Brightness()
     brightness_interface()
     return brightness_interface

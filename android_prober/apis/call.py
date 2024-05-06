@@ -6,7 +6,7 @@ from flask import request
 from android_prober.facades import Call
 from android_prober import call
 
-class CallInterface:
+class Call:
 
     def __init__(self) -> None:
         self.call: Call = call
@@ -41,6 +41,6 @@ class CallInterface:
                 value()
 
 def register_call():
-    callInterface = CallInterface()
+    callInterface = Call()
     callInterface()
     return callInterface

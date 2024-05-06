@@ -1,24 +1,12 @@
 from typing import Any
 from inspect import getmembers, ismethod
 from flask import request
-from plyer.facades.camera import Camera
-from plyer import camera
+from android_prober.facades.camera import Camera
+from android_prober import camera
 from  os.path import exists,join
-# custom module
-from android_prober.wrappers import get,post
-from abc import ABC,abstractmethod
+from android_prober.wrappers import post
 
-class ICamera(ABC):
-
-    @abstractmethod
-    def take_picture(self, filepath:str)-> dict:
-        pass
-
-    @abstractmethod
-    def take_video(self, filepath:str)->dict:
-        pass
-
-class CameraInterface(ICamera):
+class Camera:
 
     def __init__(self) -> None:
         self.camera: Camera = camera
@@ -93,6 +81,6 @@ class CameraInterface(ICamera):
                     value()
 
 def register_camera():
-    camera_interface =  CameraInterface()
+    camera_interface =  Camera()
     camera_interface()
     return camera_interface
