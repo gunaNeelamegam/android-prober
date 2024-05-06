@@ -1,6 +1,6 @@
 [app]
 title = android-prober
-package.name = android-prober
+package.name = androidprober
 package.domain = com.guna
 source.dir = ./examples
 source.include_exts = py,png,jpg,kv,html,css,otf,txt,jinja,java

@@ -1,4 +1,4 @@
-package com.guna.tester;
+package com.guna.androidprober;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
