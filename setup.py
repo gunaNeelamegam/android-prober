@@ -7,7 +7,7 @@ from sys import version_info
 current_path = Path(__file__).parent
 full_path = path.join(current_path, "README.md")
 long_discription = ""
-version = "0.1.0"
+version = "0.1.3"
 name = "android-prober"
 description = "Library for test android api's via service"
 author = "GunaNeelamegam"
