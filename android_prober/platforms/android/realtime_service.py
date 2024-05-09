@@ -3,23 +3,28 @@ from oscpy.server import OSCThreadServer
 from oscpy.client import OSCClient
 from android.broadcast import BroadcastReceiver
 from json import loads
-from jnius import autoclass, PythonJavaClass, java_method
+from jnius import autoclass,cast, PythonJavaClass, java_method
 
 PythonActivity = autoclass('org.kivy.android.PythonActivity')
 PythonService = autoclass('org.kivy.android.PythonService')
+
+telephony_callback = None
+context = PythonService.mService.getApplication().getApplicationContext()
 TelephonyManager = autoclass('android.telephony.TelephonyManager')
 System = autoclass("java.lang.System")
 Intent = autoclass("android.content.Intent")
 Context = autoclass("android.content.Context")
 Executors = autoclass("java.util.concurrent.Executors")
 PythonService.mService.setAutoRestartService(True)
+System.out.println("APPLICATION CONTEXT : " + str(context))
 
 class MyCallStateListener(PythonJavaClass):
-    __javainterfaces__ = ['android.telephony.TelephonyCallback$CallStateListener']
+    __javainterfaces__ = ['android/telephony/TelephonyCallback$CallStateListener']
+    __javacontext__ = "app"
 
     @java_method('(I)V')
     def onCallStateChanged(self, state):
-        print("Call state changed:", state)
+        System.out.println("Call state changed:" + str(state))
         if state == TelephonyManager.CALL_STATE_IDLE:
             System.out.println("Call ended or idle")
         elif state == TelephonyManager.CALL_STATE_RINGING:
@@ -27,14 +32,21 @@ class MyCallStateListener(PythonJavaClass):
         elif state == TelephonyManager.CALL_STATE_OFFHOOK:
             System.out.println("Outgoing call or call answered")
 
-def call_listener(context):
-    try:
-        System.out.println("TELE MANAGER")
+def unsubscribe_telephonyservice():
+    if telephony_callback:
+        global telephony_callback
         telephony_manager =  context.getSystemService(Context.TELEPHONY_SERVICE)
-        System.out.println("STATE : " + str(telephony_manager.getCallState()))
-        # telephony_callback = MyCallStateListener()
-        # executor = Executors.newSingleThreadExecutor();
-        # telephony_manager.registerTelephonyCallback(executor , telephony_callback)
+        telephony_manager.unregisterTelephonyCallback(telephony_callback)
+        telephony_callback = None
+           
+def subscribe_telephony_service():
+    global telephony_callback
+    try:
+        telephony_manager =  context.getSystemService(Context.TELEPHONY_SERVICE)
+        telephony_manager = cast(TelephonyManager, telephony_manager)
+        telephony_callback = MyCallStateListener()
+        executor = Executors.newSingleThreadExecutor();
+        telephony_manager.registerTelephonyCallback(executor , telephony_callback)
     except Exception as e:
         System.out.println("EXCEPTION IN AFTER START" + str(e.args))
 
@@ -69,12 +81,12 @@ def on_airplane_mode(extras, intent, context):
     CLIENT.send_message(b"/airplane_mode",[state])
 
 def on_battery_changed(extras, intent, context):
-        System.out.println("ON BATTERY CHANGED")
-        BatteryManager = autoclass("android.os.BatteryManager")
-        level = intent.getIntExtra(BatteryManager.EXTRA_LEVEL, -1)
-        scale = intent.getIntExtra(BatteryManager.EXTRA_SCALE, -1)
-        batteryPercentage = ((level // scale) * 100)
-        CLIENT.send_message(b"/battery_change", [level, scale, batteryPercentage])
+    System.out.println("ON BATTERY CHANGED")
+    BatteryManager = autoclass("android.os.BatteryManager")
+    level = intent.getIntExtra(BatteryManager.EXTRA_LEVEL, -1)
+    scale = intent.getIntExtra(BatteryManager.EXTRA_SCALE, -1)
+    batteryPercentage = ((level // scale) * 100)
+    CLIENT.send_message(b"/battery_change", [level, scale, batteryPercentage])
 
 def on_battery_low(extras, intent, context):
     CLIENT.send_message(b"/battery_low", ["BATTERY LOW".encode()])
@@ -158,10 +170,7 @@ ACTIONS = {
 }
 
 def on_broadcast(context, intent):
-        global registered
         try:
-            System.out.println(context.toString())
-            call_listener(context)
             extras = intent.getExtras()
             action = intent.getAction()
             if action:
@@ -182,6 +191,7 @@ def start_server():
 def stop_service():
     global stopped
     broadcast_receiver.stop()
+    unsubscribe_telephonyservice()
     PythonService.mService.setAutoRestartService(False)
     stopped = False
 
@@ -209,6 +219,7 @@ def message_loop():
         if stopped:
             break
         sleep(1)
+    unsubscribe_telephonyservice()
     server.terminate_server()
     sleep(0.1)
     server.close()
