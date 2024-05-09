@@ -1,4 +1,6 @@
 # Android API Testing 
+[![Upload Python Package](https://github.com/gunaNeelamegam/android-prober/actions/workflows/python-publish.yml/badge.svg)](https://github.com/gunaNeelamegam/android-prober/actions/workflows/python-publish.yml)
+[![build](https://github.com/gunaNeelamegam/android-prober/actions/workflows/build_apk.yml/badge.svg)](https://github.com/gunaNeelamegam/android-prober/actions/workflows/build_apk.yml)
 
 ## Library to test the AOSP Hardware APIs
 
