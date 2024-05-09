@@ -1,8 +1,9 @@
 name: apk_build
 
 on:
-  release:
-    - types: [published]
+  push:
+    branches:
+      - dev
       
 jobs:
   build:
