@@ -174,7 +174,7 @@ Install the generated apk into the target device.
 
 ## Documentation
 
-* kivy app internally start and runnig web service running on port 5000. 
+* python for android webview recipe internally start and serve's web service running on port 5000. 
 
 * You can also test api on Single Click.
 
