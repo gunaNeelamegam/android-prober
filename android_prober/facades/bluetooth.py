@@ -12,11 +12,10 @@ class Bluetooth:
     def unpair(self):
         pass
 
-
-    def enable(self):
+    def enable(self)-> dict:
         pass
 
-    def disable(self):
+    def disable(self) -> dict:
         pass
 
     def status(self):

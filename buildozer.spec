@@ -2,11 +2,11 @@
 title = android-prober
 package.name = androidprober
 package.domain = com.guna
-source.dir = ./examples
+source.dir = .
 source.include_exts = py,png,jpg,kv,html,css,otf,txt,jinja,java
 source.exclude_dirs = tests, bin, examples, xml
 version = 0.1
-requirements = python3,plyer,pyjnius,flask==2.2.5,Werkzeug==2.3.3,kivy==2.3.0,oscpy==0.6.0,swagger-gen==0.1.2,android-prober==0.1.4
+requirements = python3,plyer,pyjnius,flask==2.2.5,Werkzeug==2.3.3,kivy==2.3.0,oscpy==0.6.0,swagger-gen==0.1.2,android-prober
 orientation = portrait
 services = Tester:./android_prober/services/android/android_service.py:foreground:sticky
 fullscreen = 0

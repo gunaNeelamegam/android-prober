@@ -3,6 +3,7 @@ from android_prober import flash
 from android_prober.wrappers import get
 from typing import Any
 from inspect import getmembers, ismethod
+
 class Flash:
     def __init__(self) -> None:
         self.status = False
@@ -13,15 +14,10 @@ class Flash:
         description= "Using this Api Can able to Turn off the flash on android device",
         response_model =  [(201, "Success"), (500, "Failure")]
     )
-    def flash_off(self) -> dict:
+    def off(self) -> dict:
         message = ""
         if self.status:
-            self.flash.off()
-            self.flash.release()
-            message = "Flash OFF Successfully"
-        else:
-            message = "Already Flash OFF"
-
+            return self.flash_off()
         return {
             "status": True,
             "message":message
@@ -32,13 +28,10 @@ class Flash:
         description= "Using this Api Can able to Turn on the flash on android device",
         response_model =  [(201, "Success"), (500, "Failure")]
     )
-    def flash_on(self) -> dict:
+    def on(self) -> dict:
         message = ""
         if not self.status:
-            self.flash.on()
-            message = "Flash ON Successfully"
-        else:
-            message = "Flash Already On"
+            return self.flash_on()
         return {
             "status": True,
             "message": message

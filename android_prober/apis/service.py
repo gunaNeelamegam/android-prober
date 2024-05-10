@@ -14,7 +14,7 @@ class Service:
     description= "Using this Api We can able to Event's which are broadcasted by the android system",
     response_model=[(200, 'Success'), (500, 'Error')]
     )
-    def start_service(self) -> dict:
+    def start(self) -> dict:
         return self.service.start_service()
 
     @get(
@@ -22,7 +22,7 @@ class Service:
     description= "Using this Api We can able to Event's which are broadcasted by the android system",
     response_model=[(200, 'Success'), (500, 'Error')]
     )
-    def stop_service(self) -> dict:
+    def stop(self) -> dict:
         return self.stop_service()
 
     def __call__(self, *args: Any, **kwds: Any) -> Any:
