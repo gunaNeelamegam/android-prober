@@ -4,14 +4,25 @@ from oscpy.client import OSCClient
 from android.broadcast import BroadcastReceiver
 from json import loads
 from jnius import autoclass,cast, PythonJavaClass, java_method
+from android import mActivity
 
 PythonActivity = autoclass('org.kivy.android.PythonActivity')
 PythonService = autoclass('org.kivy.android.PythonService')
+System = autoclass("java.lang.System")
 
 telephony_callback = None
-context = PythonService.mService.getApplication().getApplicationContext()
+context = None
+try:
+    context = PythonService.mService.getApplication().getApplicationContext()
+    System.out.println("APPLICATION SERVICE CONTEXT : " + context.toString())
+
+except Exception as e:
+    System.out.println("".join(e.args))
+    context =  mActivity.getApplicationContext()
+    System.out.println("APPLICATION MACTIVITY CONTEXT : " + context.toString())
+
+
 TelephonyManager = autoclass('android.telephony.TelephonyManager')
-System = autoclass("java.lang.System")
 Intent = autoclass("android.content.Intent")
 Context = autoclass("android.content.Context")
 Executors = autoclass("java.util.concurrent.Executors")
@@ -33,7 +44,7 @@ class MyCallStateListener(PythonJavaClass):
             System.out.println("Outgoing call or call answered")
 
 def unsubscribe_telephonyservice():
-    if telephony_callback:
+    if telephony_callback and context:
         global telephony_callback
         telephony_manager =  context.getSystemService(Context.TELEPHONY_SERVICE)
         telephony_manager.unregisterTelephonyCallback(telephony_callback)
@@ -42,11 +53,12 @@ def unsubscribe_telephonyservice():
 def subscribe_telephony_service():
     global telephony_callback
     try:
-        telephony_manager =  context.getSystemService(Context.TELEPHONY_SERVICE)
-        telephony_manager = cast(TelephonyManager, telephony_manager)
-        telephony_callback = MyCallStateListener()
-        executor = Executors.newSingleThreadExecutor();
-        telephony_manager.registerTelephonyCallback(executor , telephony_callback)
+        if context and telephony_callback:
+            telephony_manager =  context.getSystemService(Context.TELEPHONY_SERVICE)
+            telephony_manager = cast(TelephonyManager, telephony_manager)
+            telephony_callback = MyCallStateListener()
+            executor = Executors.newSingleThreadExecutor();
+            telephony_manager.registerTelephonyCallback(executor , telephony_callback)
     except Exception as e:
         System.out.println("EXCEPTION IN AFTER START" + str(e.args))
 
