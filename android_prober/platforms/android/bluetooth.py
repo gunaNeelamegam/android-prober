@@ -15,6 +15,7 @@ class AndroidBluetooth(Bluetooth):
         self.connected_device = None
         self.is_connected = False
         self.ble_adapter = self.BluetoothAdapter.getDefaultAdapter()
+        self.UUID = autoclass('java.util.UUID')
         self.FOUND = self.BluetoothDevice.ACTION_FOUND
         self.STARTED = self.BluetoothAdapter.ACTION_DISCOVERY_STARTED
         self.FINISHED = self.BluetoothAdapter.ACTION_DISCOVERY_FINISHED
@@ -43,16 +44,20 @@ class AndroidBluetooth(Bluetooth):
             System.out.println("SCANNING STOPED")
 
     def enable(self) -> bool:
-        status = False
         if (self.ble_adapter and not self.ble_adapter.isEnabled()):
             self.ble_adapter.enable()
-            status = self.ble_adapter.isEnabled()
-        return status
+        return {
+            "status": True,
+            "message": "Success Bluetooth Adaptor Disabled"
+        }
 
     def disable(self)-> bool:
         if (self.ble_adapter and self.ble_adapter.isEnabled()):
             self.ble_adapter.disable()
-        return self.ble_adapter.isEnabled()
+        return {
+            "status": True,
+            "message": "Success Bluetooth Adaptor Disabled"
+        }
 
     def paired_devices(self):
         if self.ble_adapter:
@@ -60,13 +65,21 @@ class AndroidBluetooth(Bluetooth):
             response = []
             for device in bounded_devices:
                 response.append((device.getName(), device.getAddress()))
-        return response
+        return {
+            "success": True,
+            "devices": response,
+            "message": "Paired Devices"
+        }
 
     def scan(self):
         actions = [self.FOUND, self.STARTED, self.FINISHED]
         self.boardcast_receiver = BroadcastReceiver(self.on_scanning, actions=actions)
         self.boardcast_receiver.start()
         self.ble_adapter.startDiscovery()
+        return {
+            "success": True,
+            "message": "Scanning Started Successfully"
+        }
 
     def is_device_paired(self, remote_info: dict) -> bool:
         name = remote_info.get("name", "").lower()
@@ -82,34 +95,59 @@ class AndroidBluetooth(Bluetooth):
         return (True,filtered_devices[0]) if len(filtered_devices) else (False, None)
 
     def pair(self, mac_address: str):
+        message = "Provide Bluetooth Correct Credential's"
         if self.ble_adapter and mac_address.strip() != "":
             device = self.ble_adapter.getRemoteDevice(mac_address)
             if device and device.getBondState() != self.BluetoothDevice.BOND_BONDED:
                 device.createBond()
+                return {
+                    "status": True,
+                    "device": (device.getName(), device.getAddress()),
+                    "message": "Device Paired Successfully"
+                }
+            else:
+                message = "Device Already in Bonded State"
+        
+        return {
+            "status": False,
+            "device": [],
+            "message": message
+        }
 
     def connect(self, device_info: dict = {}):
         self.connected_device = None
         device = self.ble_adapter.getRemoteDevice(device_info.get("address"))
         if device and device.getBondState()  != self.BluetoothDevice.BOND_NONE:
-            UUID = autoclass('java.util.UUID')
-            self.connected_device = device.createRfcommSocketToServiceRecord(UUID.fromString(self.SERIAL_PORT_PROFILE_UUID))
+            self.connected_device = device.createRfcommSocketToServiceRecord(self.UUID.fromString(self.SERIAL_PORT_PROFILE_UUID))
             self.connected_device.getInputStream()
             self.connected_device.getOutputStream()
             self.connected_device.connect()
             System.out.println("CONNECTED DEVICE : " + str(self.connected_device.isConnected()) + str(self.connected_device.getRemoteDevice().toString()))
-
+        return  {
+            "success": True,
+            "message": "Device Connection Process Started"
+        }
+    
     def disconnect(self):
         if self.connected_device:
             System.out.println("DISCONNECTED : " + self.connected_device.isConnected())
             self.connected_device.close()
             self.is_connected = False
             self.connected_device = None
-
+        return {
+            "success": True,
+            "message": f"Device Disconnected Successfully"
+        }
+    
     def unpair(self, address: Union[str, Any]):
         if self.ble_adapter and address.strip():
             device = self.ble_adapter.getRemoteDevice(address)
             if (device.getBondState() == self.BluetoothDevice.BOND_BONDED):
                 device.removeBond();
+        return {
+            "success": True,
+            "message": f"{address} Unpair Successfully"
+        }
     class BleDevice:
         def __init__(self, name ="", address= "") -> None:
             self.name = name
