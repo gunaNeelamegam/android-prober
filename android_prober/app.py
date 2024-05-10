@@ -77,6 +77,7 @@ def register_interface():
     from android_prober.apis.camera import register_camera
     from android_prober.apis.service import register_service
     from android_prober.apis.flash import register_flash
+    from android_prober.apis.runtime_permission import register_runpermission
 
 
 
@@ -94,3 +95,4 @@ def register_interface():
     register_email()
     register_flash()
     register_service()
+    register_runpermission()

@@ -4,7 +4,7 @@ from android_prober.wrappers import get
 from android_prober.facades import RuntimePermission
 from android_prober import runtime_permission
 
-class Runtime:
+class RuntimePermission:
 
     def __init__(self) -> None:
         self.runtime_perm: RuntimePermission = runtime_permission
@@ -42,6 +42,6 @@ class Runtime:
                 value()
 
 def register_runpermission():
-    run_permission = Runtime()
+    run_permission = RuntimePermission()
     run_permission()
     return run_permission

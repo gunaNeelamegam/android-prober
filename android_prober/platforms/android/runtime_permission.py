@@ -47,7 +47,6 @@ class AndroidRuntimePermission(RuntimePermission):
 
     def __init__(self) -> None:
         self.runtime_perm = AndroidPermission()
-
     
     def location_permission(self):
         status = self.runtime_perm.location_permission()
@@ -63,5 +62,4 @@ class AndroidRuntimePermission(RuntimePermission):
 
 def instance():
     run_permission = AndroidRuntimePermission()
-    run_permission()
     return run_permission
