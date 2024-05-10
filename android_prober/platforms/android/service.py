@@ -46,3 +46,6 @@ class AndroidService:
             print("EXECPTION:", e.args)
         finally :
             return status
+
+def instance():
+    return AndroidService()

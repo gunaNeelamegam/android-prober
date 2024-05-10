@@ -8,6 +8,7 @@ class Bluetooth:
 
     def __init__(self) -> None:
         self.bluetooth: Bluetooth = bluetooth
+
     @get(
         summary= "Turn on Bluetooth",
         description= "Using this Api we can able to turn on bluetooth\n Platform Support's Android",

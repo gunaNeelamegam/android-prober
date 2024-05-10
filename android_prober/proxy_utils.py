@@ -1,7 +1,6 @@
 """
 Structural Design Pattern Impressed from Plyer Module
 """
-import traceback
 import warnings
 from android_prober.utils.common import platform
 class Proxy:
@@ -27,15 +26,15 @@ class Proxy:
             
         except Exception as e:
             warnings.warn("".join(e.args))
-            traceback.print_exc()
             try:                
                 name = object.__getattribute__(self, '_name')
                 module = 'android_prober.platforms.{}.{}'.format(
                     platform, name)
                 mod = __import__(module, fromlist= ["."])
                 obj = mod.instance()
-            except Exception:
-                traceback.print_exc()
+
+            except Exception as e:
+                warnings.warn("".join(e.args))
                 facade = object.__getattribute__(self, '_facade')
                 obj = facade()
 

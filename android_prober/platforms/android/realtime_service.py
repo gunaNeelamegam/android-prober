@@ -216,6 +216,7 @@ def get_categorys():
 def message_loop():
     broadcast_receiver.start()
     while True:
+        System.out.println("ANDROID PROBER");
         if stopped:
             break
         sleep(1)
