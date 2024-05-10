@@ -79,8 +79,6 @@ def register_interface():
     from android_prober.apis.flash import register_flash
     from android_prober.apis.runtime_permission import register_runpermission
 
-
-
     # REGISTERING THE SERVICE's
 
     register_camera()
