@@ -17,7 +17,7 @@ class Flash:
     def off(self) -> dict:
         message = ""
         if self.status:
-            return self.flash_off()
+            return self.flash.flash_off()
         return {
             "status": True,
             "message":message
@@ -31,7 +31,7 @@ class Flash:
     def on(self) -> dict:
         message = ""
         if not self.status:
-            return self.flash_on()
+            return self.flash.flash_on()
         return {
             "status": True,
             "message": message
